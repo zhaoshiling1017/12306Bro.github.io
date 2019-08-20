@@ -6,16 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://www.96007.club">
-  <title>Archives: 2019/8 | 12306Bro.blog</title>
+  <title>基于流量侧检测冰蝎webshell交互通讯 | 12306Bro.blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="12306Bro.blog">
-<meta property="og:url" content="https://www.96007.club/archives/2019/08/index.html">
+  <meta name="description" content="概述作为新型加密webshell管理客户端，冰蝎算是作为中国菜刀、C刀的替代者。根据网传使用效果，基本得到的反馈是相当的NICE！那么我们能否像检测中国菜刀、C刀那样对冰蝎客户端的流量进行检测，帮助网站管理员判断自己的网站是否存在后门。本文后续一一介绍。 一、冰蝎主要功能1.基本信息客户端和服务端握手之后，会获取服务器的基本信息，Java、.NET版本包括环境变量、系统属性等，PHP版本会显示ph">
+<meta name="keywords" content="流量分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于流量侧检测冰蝎webshell交互通讯">
+<meta property="og:url" content="https://www.96007.club/2019/08/19/2019-8/index.html">
 <meta property="og:site_name" content="12306Bro.blog">
+<meta property="og:description" content="概述作为新型加密webshell管理客户端，冰蝎算是作为中国菜刀、C刀的替代者。根据网传使用效果，基本得到的反馈是相当的NICE！那么我们能否像检测中国菜刀、C刀那样对冰蝎客户端的流量进行检测，帮助网站管理员判断自己的网站是否存在后门。本文后续一一介绍。 一、冰蝎主要功能1.基本信息客户端和服务端握手之后，会获取服务器的基本信息，Java、.NET版本包括环境变量、系统属性等，PHP版本会显示ph">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2019/08/20/CgslvLcir5zp9DV.png">
+<meta property="og:image" content="https://i.loli.net/2019/08/20/SP8efjnIgVLlw6R.png">
+<meta property="og:image" content="https://i.loli.net/2019/08/20/8IHi5uDLxfNzcAl.png">
+<meta property="og:image" content="https://i.loli.net/2019/08/20/q4wSaMZbJcLAuDQ.png">
+<meta property="og:image" content="https://i.loli.net/2019/08/20/6nerIZMwhAfWt9p.png">
+<meta property="og:image" content="https://i.loli.net/2019/08/20/xEnTlpUPu5qZ3NH.png">
+<meta property="og:image" content="https://i.loli.net/2019/08/20/iE37HgJvVpbLwyn.png">
+<meta property="og:updated_time" content="2019-08-20T04:26:36.605Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="12306Bro.blog">
+<meta name="twitter:title" content="基于流量侧检测冰蝎webshell交互通讯">
+<meta name="twitter:description" content="概述作为新型加密webshell管理客户端，冰蝎算是作为中国菜刀、C刀的替代者。根据网传使用效果，基本得到的反馈是相当的NICE！那么我们能否像检测中国菜刀、C刀那样对冰蝎客户端的流量进行检测，帮助网站管理员判断自己的网站是否存在后门。本文后续一一介绍。 一、冰蝎主要功能1.基本信息客户端和服务端握手之后，会获取服务器的基本信息，Java、.NET版本包括环境变量、系统属性等，PHP版本会显示ph">
+<meta name="twitter:image" content="https://i.loli.net/2019/08/20/CgslvLcir5zp9DV.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -173,41 +186,103 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-2019-8" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class=" article-header">
   
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/08/19/2019-8/" class="archive-article-date">
-        <time datetime="2019-08-19T06:38:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-19</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	      <a class="archive-article-title" href="/2019/08/19/2019-8/" target="_blank">基于流量侧检测冰蝎webshell交互通讯</a>
-        
+    <h1 class="article-title" itemprop="name">
+      基于流量侧检测冰蝎webshell交互通讯
     </h1>
   
 
 
-        <div class="article-info info-on-right">
-          
+  
+  
+        <!-- 不蒜子统计 -->
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2019/08/19/2019-8/" class="archive-article-date">
+        <time datetime="2019-08-19T06:38:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-19</time>
+</a>
+
+  
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>作为新型加密webshell管理客户端，冰蝎算是作为中国菜刀、C刀的替代者。根据网传使用效果，基本得到的反馈是相当的NICE！那么我们能否像检测中国菜刀、C刀那样对冰蝎客户端的流量进行检测，帮助网站管理员判断自己的网站是否存在后门。本文后续一一介绍。</p>
+<h2 id="一、冰蝎主要功能"><a href="#一、冰蝎主要功能" class="headerlink" title="一、冰蝎主要功能"></a>一、冰蝎主要功能</h2><h3 id="1-基本信息"><a href="#1-基本信息" class="headerlink" title="1.基本信息"></a>1.基本信息</h3><p>客户端和服务端握手之后，会获取服务器的基本信息，Java、.NET版本包括环境变量、系统属性等，PHP版本会显示phpinfo的内容。</p>
+<h3 id="2-文件管理"><a href="#2-文件管理" class="headerlink" title="2.文件管理"></a>2.文件管理</h3><p>和中国菜刀、C刀的功能差不多，文件的增删改查，稍微不同的是文件都是进行了加密传输的，可以避免被拦截。</p>
+<h3 id="3-命令执行"><a href="#3-命令执行" class="headerlink" title="3.命令执行"></a>3.命令执行</h3><p>执行单条操作系统命令。</p>
+<h3 id="4-虚拟终端"><a href="#4-虚拟终端" class="headerlink" title="4.虚拟终端"></a>4.虚拟终端</h3><p>虚拟终端提供了一个模拟真实的交互式shell环境，相当于把服务器侧的shell客户端放在了管理工具内，在这个shell里你可以执行各种需要交互的命令，当然你也可以利用它对内网进行攻击测试。</p>
+<h3 id="5-Scoks代理"><a href="#5-Scoks代理" class="headerlink" title="5.Scoks代理"></a>5.Scoks代理</h3><p>虚拟终端功能其实已经是部分实现了内网穿透的能力。在shell环境里所进行的操作其实都是在内网环境下进行的，不过为了方便使用，客户端提供了基于一句话木马的Socks代理功能，一键开启，简单高效。</p>
+<h3 id="6-反弹shell"><a href="#6-反弹shell" class="headerlink" title="6.反弹shell"></a>6.反弹shell</h3><p>反弹Shell是突破防火墙的利器，也几乎是后渗透过程的必备步骤。提到后渗透，当然少不了metasploit，提到metasploit，当然少不了meterpreter，所以冰蝎客户端提供了两种反弹Shell的方式，常规Shell和Meterpreter，实现和metasploit的一键无缝对接。</p>
+<h3 id="7-数据库管理"><a href="#7-数据库管理" class="headerlink" title="7.数据库管理"></a>7.数据库管理</h3><p>常规功能，实现了数据库的可视化管理，和常规管理工具不同的是，在Java和.NET环境中，当目标机器中没有对应数据库的驱动时，会自动上传并加载数据库驱动。比如目标程序用的是MySQL的数据，但是内网有另外一台Oracle，此时就会自动上传并加载Oracle对应的驱动。</p>
+<h3 id="8-自定义代码"><a href="#8-自定义代码" class="headerlink" title="8.自定义代码"></a>8.自定义代码</h3><p>可以在服务端执行任意的Java、PHP、C#代码，这也是个常规功能，值得一提的是我们输入的代码都是加密传输的，所以不用为了躲避waf而用各种编码变形。</p>
+<h3 id="9-备忘录"><a href="#9-备忘录" class="headerlink" title="9.备忘录"></a>9.备忘录</h3><p>渗透的时候总有很多零碎的信息需要记录，所以针对每个Shell提供了一个备忘录的功能，目前只支持纯文本，粘贴进去自动保存。</p>
+<h2 id="二、基于流量检测"><a href="#二、基于流量检测" class="headerlink" title="二、基于流量检测"></a>二、基于流量检测</h2><p>基于流量检测，自然需要进行模拟测试。如果你有兴趣，你也可以进行本地模拟测试，把正常的网站访问流量和冰蝎交互通讯流量放在一起，进行对比，很快，你也能够找到它们的不同之处。</p>
+<h3 id="1-测试环境"><a href="#1-测试环境" class="headerlink" title="1.测试环境"></a>1.测试环境</h3><p>PHP网站（Phpstudy+DVWA）</p>
+<p>冰蝎V1.0/V2.0（客户端+自带shell）</p>
+<p>wireshark（必备）</p>
+<h3 id="2-流量对比"><a href="#2-流量对比" class="headerlink" title="2.流量对比"></a>2.流量对比</h3><h4 id="冰蝎V1-0"><a href="#冰蝎V1-0" class="headerlink" title="冰蝎V1.0"></a>冰蝎V1.0</h4><h5 id="1）正常流量"><a href="#1）正常流量" class="headerlink" title="1）正常流量"></a>1）正常流量</h5><p><img src="https://i.loli.net/2019/08/20/CgslvLcir5zp9DV.png" alt="01"></p>
+<h5 id="2）冰蝎客户端与服务端通信流量"><a href="#2）冰蝎客户端与服务端通信流量" class="headerlink" title="2）冰蝎客户端与服务端通信流量"></a>2）冰蝎客户端与服务端通信流量</h5><p><img src="https://i.loli.net/2019/08/20/SP8efjnIgVLlw6R.png" alt="02.png"></p>
+<p><img src="https://i.loli.net/2019/08/20/8IHi5uDLxfNzcAl.png" alt="03.png"></p>
+<h5 id="3）正常流量VS冰蝎通讯流量"><a href="#3）正常流量VS冰蝎通讯流量" class="headerlink" title="3）正常流量VS冰蝎通讯流量"></a>3）正常流量VS冰蝎通讯流量</h5><p><img src="https://i.loli.net/2019/08/20/q4wSaMZbJcLAuDQ.png" alt="user-agent.png"></p>
+<p>从中可以看到冰蝎V1.0版本初期交互时，特征较为明显，user-agent与正常业务流量明显不同。可以通过对<strong>user-agent</strong>进行检测分析。其次在POST返回包中相对正常流量多了<strong>Transfer-Encoding: chunked</strong>，Transfer-Encoding主要是用来改变报文格式，这里指的是利用分块进行传输。你可以基于此特征值进行检测，当然，你也可以用更简单的方法进行检测，比如url中包含<strong>*.php?pass=</strong>来进行检测。</p>
+<h4 id="冰蝎V2-1"><a href="#冰蝎V2-1" class="headerlink" title="冰蝎V2.1"></a>冰蝎V2.1</h4><p>从冰蝎V1.1开始新增随机UserAgent支持，每次会话会从17种常见UserAgent中随机选取。冰蝎最新版本为V2.1，可以通过对2.1版本服务端与客户端的通信流量，进行捕获，对比正常流量进行分析。</p>
+<h5 id="1）正常流量-1"><a href="#1）正常流量-1" class="headerlink" title="1）正常流量"></a>1）正常流量</h5><p><img src="https://i.loli.net/2019/08/20/6nerIZMwhAfWt9p.png" alt="10.png"></p>
+<h5 id="2）冰蝎客户端与服务端通信流量-1"><a href="#2）冰蝎客户端与服务端通信流量-1" class="headerlink" title="2）冰蝎客户端与服务端通信流量"></a>2）冰蝎客户端与服务端通信流量</h5><p><img src="https://i.loli.net/2019/08/20/xEnTlpUPu5qZ3NH.png" alt="Transfer-Encoding.png"></p>
+<h5 id="3）正常流量VS冰蝎通讯流量-1"><a href="#3）正常流量VS冰蝎通讯流量-1" class="headerlink" title="3）正常流量VS冰蝎通讯流量"></a>3）正常流量VS冰蝎通讯流量</h5><p><img src="https://i.loli.net/2019/08/20/iE37HgJvVpbLwyn.png" alt="VS.png"></p>
+<p>通过对比可以看到，冰蝎V2.1版本在初期交互通讯时流量中多了一个<strong>Transfer-Encoding: chunked</strong>，Transfer-Encoding主要是用来改变报文格式，这里指的是利用分块进行传输。你可以基于此特征值进行检测，当然，你也可以用更简单的方法进行检测，比如url中包含<strong>*.php?pass=</strong>来进行检测。</p>
+<p><strong>值得注意的是，文中提到的检测特征需要特定的环境！</strong></p>
+<h3 id="检测特征"><a href="#检测特征" class="headerlink" title="检测特征"></a>检测特征</h3><h4 id="冰蝎V1-0-1"><a href="#冰蝎V1-0-1" class="headerlink" title="冰蝎V1.0"></a>冰蝎V1.0</h4><p>基于GET请求包的检测特征：url包含.php?pass=，useragent包含Java/*；</p>
+<p>基于POST请求包的检测特征：useragent包含Java/* ，返回包包含：Transfer-Encoding: chunked；</p>
+<h4 id="冰蝎V2-1-1"><a href="#冰蝎V2-1-1" class="headerlink" title="冰蝎V2.1"></a>冰蝎V2.1</h4><p>基于GET请求包的检测特征：url包含.php?pass=；（如果与业务冲突，误报较大）</p>
+<p>基于POST返回包的检测特征：Transfer-Encoding: chunked；</p>
+<p>关于详细的你也可以查看<a href="https://github.com/12306Bro/My-life/blob/master/T1100-webshell-%E5%86%B0%E8%9D%8E.md" target="_blank" rel="noopener">T1100-weshell-冰蝎检测</a></p>
+<h2 id="三、厂商检测能力"><a href="#三、厂商检测能力" class="headerlink" title="三、厂商检测能力"></a>三、厂商检测能力</h2><p>冰蝎真的有大家说的那么强么？真的是无懈可击么？其实安全厂商在某次活动之后就关注了它，并提供了检测规则。以下资料来源于互联网。如有侵权，请及时与我联系！</p>
+<h3 id="1-绿盟"><a href="#1-绿盟" class="headerlink" title="1.绿盟"></a>1.绿盟</h3><p>2019-06-14 绿盟发布日志数据安全性分析系统(BSA)升级包，新增对冰蝎webshell上传检测规则；</p>
+<p>参考链接：<a href="http://update.nsfocus.com/update/listBsaUtsDetail/v/rule2.0.0" target="_blank" rel="noopener">http://update.nsfocus.com/update/listBsaUtsDetail/v/rule2.0.0</a></p>
+<p>2019-06-17  绿盟发布WEB应用防护系统(WAF) 规则升级包，添加j检测冰蝎webshell特征；</p>
+<p>参考链接：<a href="http://update.nsfocus.com/update/listWafV65Detail/v/rule6.0.5" target="_blank" rel="noopener">http://update.nsfocus.com/update/listWafV65Detail/v/rule6.0.5</a></p>
+<h3 id="2-新华三"><a href="#2-新华三" class="headerlink" title="2.新华三"></a>2.新华三</h3><p>2019-06-29 新华三发布IPS特征库升级包，新增尝试上传冰蝎webshell后门文件检测规则；</p>
+<p>参考链接：<a href="http://www.h3c.com/cn/d_201907/1210668_30003_0.htm" target="_blank" rel="noopener">http://www.h3c.com/cn/d_201907/1210668_30003_0.htm</a></p>
+<h3 id="3-百度安全"><a href="#3-百度安全" class="headerlink" title="3.百度安全"></a>3.百度安全</h3><p>2019-08-08 百度安全发布《那些年我们堵住的洞—OpenRASP纪实》一文，文中提到可对冰蝎动态后门JSP版进行检测；</p>
+<p>参考链接：<a href="https://anquan.baidu.com/article/855" target="_blank" rel="noopener">https://anquan.baidu.com/article/855</a></p>
+<h3 id="4-其他待补充"><a href="#4-其他待补充" class="headerlink" title="4.其他待补充"></a>4.其他待补充</h3><p>暂无</p>
+
+    
+
+    
+
+    
+      <div> 
+        <ul class="post-copyright">
+          <li>
+            <strong>本文作者：</strong>
+            12306Bro
+          </li>
+          <li>
+            <strong>本文链接：</strong>
+            <a href="https://www.96007.club/2019/08/19/2019-8/" title="基于流量侧检测冰蝎webshell交互通讯" target="_blank">https://www.96007.club/2019/08/19/2019-8/</a>
+          </li>
+          <li>
+            <strong>版权声明： </strong>
+            本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow" target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
+          </li>
+        </ul>
+      </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -219,19 +294,97 @@
 		</ul>
 	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+    
 
     
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://www.96007.club/2019/08/19/2019-8/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
           </div>
@@ -270,8 +423,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
