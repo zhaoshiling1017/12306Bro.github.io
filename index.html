@@ -179,7 +179,7 @@
             
 
   
-    <article id="post-28" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-T1003" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class=" article-header">
@@ -187,7 +187,7 @@
   
     <h1 itemprop="name">
 	
-	      <a class="article-title" href="/2019/08/28/28/" target="_blank">ATT&amp;CK解读——T1166</a>
+	      <a class="article-title" href="/2019/09/02/T1003/" target="_blank">T1003-windows-基于LSA凭证获取</a>
         
     </h1>
   
@@ -195,7 +195,115 @@
 
   
   
-<a href="/2019/08/28/28/" class="archive-article-date">
+<a href="/2019/09/02/T1003/" class="archive-article-date">
+        <time datetime="2019-09-02T01:17:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
+</a>
+
+  
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="来自ATT-amp-CK的描述"><a href="#来自ATT-amp-CK的描述" class="headerlink" title="来自ATT&amp;CK的描述"></a>来自ATT&amp;CK的描述</h2><p>凭证获取是从操作系统和软件中获取登录信息和密码的过程，通常为HASH散列或明文密码。然后使用凭证进行横向移动访问其他系统。</p>
+<h3 id="LSA（Local-Security-Authority）"><a href="#LSA（Local-Security-Authority）" class="headerlink" title="LSA（Local Security Authority）"></a>LSA（Local Security Authority）</h3><p>通过system权限访问主机lsass.exe进程，可以从中读取本地登录和域登录的明文密码。当服务在本地或域用户的上下文中运行时，其密码存储在注册表中。如果启用了自动登录，则此信息也将存储在注册表中。</p>
+<p>本地安全机构子系统服务（LSASS）处理Windows主机中安全策略的实施。在从2000到Server 2008的Windows环境中，LSASS进程的内存以明文形式存储密码以支持WDigest和SSP身份验证。因此，Mimikatz等工具可以轻松检索密码。自Windows 8.1和Windows Server 2012的Microsoft为了增强系统的安全性，进一步阻止了LSASS以明文形式存储密码。</p>
+<h2 id="测试案例"><a href="#测试案例" class="headerlink" title="测试案例"></a>测试案例</h2><p>你可以使用许多工具进行检索读取SAM文件：</p>
+<ul>
+<li>pwdump.exe</li>
+<li>Mimikatz</li>
+<li>gsecdump</li>
+<li>······</li>
+</ul>
+<p>或者，可以使用reg.exe从Registry和用于收集凭据的Creddump7或者hashcat中提取。</p>
+<p>注意：由机制问题提取的密码是UTF-16编码的，这意味着它们以明文形式返回.Windows 10增加了对缓解中描述的LSA秘密的保护</p>
+<h2 id="检测日志"><a href="#检测日志" class="headerlink" title="检测日志"></a>检测日志</h2><p>sysmon日志</p>
+<p>windows security日志</p>
+<h2 id="测试复现"><a href="#测试复现" class="headerlink" title="测试复现"></a>测试复现</h2><h3 id="攻击方法：从lsass-exe程序内存中读取密码-administrator"><a href="#攻击方法：从lsass-exe程序内存中读取密码-administrator" class="headerlink" title="攻击方法：从lsass.exe程序内存中读取密码(administrator)"></a>攻击方法：从lsass.exe程序内存中读取密码(administrator)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">C:\mimikatz_trunk\x64&gt;mimikatz.exe &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords&quot;</span><br><span class="line"></span><br><span class="line">mimikatz(commandline) # privilege::debug</span><br><span class="line">Privilege &apos;20&apos; OK</span><br><span class="line"></span><br><span class="line">mimikatz(commandline) # sekurlsa::logonpasswords</span><br><span class="line"></span><br><span class="line">Authentication Id : 0 ; 246475 (00000000:0003c2cb)</span><br><span class="line">Session           : RemoteInteractive from 2</span><br><span class="line">User Name         : 1.205</span><br><span class="line">Domain            : 1205-PC</span><br><span class="line">Logon Server      : 1205-PC</span><br><span class="line">Logon Time        : 2019/7/10 16:12:02</span><br><span class="line">SID               : S-1-5-21-4083414316-2806399370-2225847366-1000</span><br><span class="line">        msv :</span><br><span class="line">         [00000003] Primary</span><br><span class="line">         * Username : 1.205</span><br><span class="line">         * Domain   : 1205-PC</span><br><span class="line">         * LM       : 6ce1432e9b83da8da8eed815a197bd87</span><br><span class="line">         * NTLM     : 6136ba14352c8a09405bb14912797793</span><br><span class="line">         * SHA1     : b1ab7381d8e9799e407f1d4cb39e33b5d3e54f72</span><br><span class="line">        tspkg :</span><br><span class="line">         * Username : 1.205</span><br><span class="line">         * Domain   : 1205-PC</span><br><span class="line">         * Password : 1qazcde3!@#</span><br><span class="line">        wdigest :</span><br><span class="line">         * Username : 1.205</span><br><span class="line">         * Domain   : 1205-PC</span><br><span class="line">         * Password : 1qazcde3!@#</span><br><span class="line">        kerberos :</span><br><span class="line">         * Username : 1.205</span><br><span class="line">         * Domain   : 1205-PC</span><br><span class="line">         * Password : 1qazcde3!@</span><br><span class="line">        ssp :</span><br><span class="line">        credman :</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试留痕"><a href="#测试留痕" class="headerlink" title="测试留痕"></a>测试留痕</h2><p>暂无</p>
+<h2 id="检测规则-思路"><a href="#检测规则-思路" class="headerlink" title="检测规则/思路"></a>检测规则/思路</h2><h3 id="sysmon日志"><a href="#sysmon日志" class="headerlink" title="sysmon日志"></a>sysmon日志</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">title: T1003-win-基于LSA-mimikatz凭证获取</span><br><span class="line">description: win7 模拟测试结果</span><br><span class="line">status: experimental</span><br><span class="line">author: 12306Bro</span><br><span class="line">references: https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump</span><br><span class="line">tags: ATT&amp;CK T1003</span><br><span class="line">logsource:</span><br><span class="line">​    product: windows</span><br><span class="line">​    service: sysmon</span><br><span class="line">detection:</span><br><span class="line">​    selection:</span><br><span class="line">​        EventID: 10</span><br><span class="line">​        TargetImage: &apos;C:\Windows\system32\lsass.exe&apos;</span><br><span class="line">​    condition: selection</span><br><span class="line">level: high</span><br></pre></td></tr></table></figure>
+
+<h3 id="windows-security日志"><a href="#windows-security日志" class="headerlink" title="windows security日志"></a>windows security日志</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">title: T1003-win-基于LSA-mimikatz凭证获取</span><br><span class="line">description: win7 模拟测试结果</span><br><span class="line">status: experimental</span><br><span class="line">author: 12306Bro</span><br><span class="line">references: https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump</span><br><span class="line">tags: ATT&amp;CK T1003</span><br><span class="line">logsource:</span><br><span class="line">​    product: windows</span><br><span class="line">​    service: security</span><br><span class="line">detection:</span><br><span class="line">​    selection:</span><br><span class="line">​        EventID: 4673</span><br><span class="line">​        LoginIO: 0x3E7</span><br><span class="line">​        Server: &apos;NT Local Security Authority / Authentication Service&apos;</span><br><span class="line">​        ServiceName: &apos;LsaRegisterLogonProcess()&apos;</span><br><span class="line">​        Processname: &apos;C:\Windows\System32\lsass.exe&apos;</span><br><span class="line">​        Privilege: SeTcbPrivilege</span><br><span class="line">​    condition: selection</span><br><span class="line">level: high</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考推荐"><a href="#参考推荐" class="headerlink" title="参考推荐"></a>参考推荐</h2><p>MITRE-ATT&amp;CK-T1003：<a href="https://attack.mitre.org/techniques/T1003/" target="_blank" rel="noopener">https://attack.mitre.org/techniques/T1003/</a></p>
+<p>pwdump7：<a href="http://passwords.openwall.net/b/pwdump/pwdump7.zip" target="_blank" rel="noopener">http://passwords.openwall.net/b/pwdump/pwdump7.zip</a></p>
+<p>powershell：<a href="https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-PowerDump.ps1" target="_blank" rel="noopener">https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-PowerDump.ps1</a></p>
+<p>mimikatz wiki：<a href="https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump" target="_blank" rel="noopener">https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump</a></p>
+<p>关于更多转储明文密码你可以参考：<a href="https://pentestlab.blog/2018/04/04/dumping-clear-text-credentials/" target="_blank" rel="noopener">https://pentestlab.blog/2018/04/04/dumping-clear-text-credentials/</a></p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/09/02/T1003/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-T1166" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class=" article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	      <a class="article-title" href="/2019/08/28/T1166/" target="_blank">ATT&amp;CK解读——T1166</a>
+        
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/08/28/T1166/" class="archive-article-date">
         <time datetime="2019-08-28T14:42:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-28</time>
 </a>
 
@@ -205,7 +313,7 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p> 最近事情比较多，一方面要做赋能培训，还要做研究报告，又要支持项目，整个人都是蒙的。哦，对了！还有ATT&amp;CK解读……. 我太难了！</p>
+    <p> 最近事情比较多，一方面要做赋能培训，还要做研究报告，又要支持项目，整个人都是蒙的。哦，对了还有ATT&amp;CK解读……. 我太难了！</p>
 <h1 id="T1166-linux-Setuid-and-Setgid"><a href="#T1166-linux-Setuid-and-Setgid" class="headerlink" title="T1166-linux-Setuid and Setgid"></a>T1166-linux-Setuid and Setgid</h1><h2 id="来自ATT-amp-CK的描述"><a href="#来自ATT-amp-CK的描述" class="headerlink" title="来自ATT&amp;CK的描述"></a>来自ATT&amp;CK的描述</h2><p>当在Linux或macOS上为应用程序设置setuid或setgid时，这意味着应用程序将分别以拥有用户或组的权限运行 。通常，应用程序在当前用户的上下文中运行，无论哪个用户或组拥有该应用程序。有些场景下我们需要让执行该命令的用户以该命令拥有者（或该文件所属组）的权限去执行，比如普通用户执行passwd时会拥有root的权限，这样就可以修改/etc/passwd这个文件了。任何用户都可以指定为自己的应用程序设置的setuid或setgid标志，而不是在sudoers文件中创建必须由root用户完成的条件。在查看文件的属性时，它的标志为：s，会出现在x的地方，例：-rwsr-xr-x 。可以使用ls -l查看文件属性。</p>
 <h2 id="关于Setuid-and-Setgid详解"><a href="#关于Setuid-and-Setgid详解" class="headerlink" title="关于Setuid and Setgid详解"></a>关于Setuid and Setgid详解</h2><p>要讲Setuid和Setgid就不得不提linux的文件权限机制。文件权限的机制是Linux系统的一大特色，初学Linux的人都知道可读（r）、可写（w）、可执行（x）这都是比较基本的权限。但是Linux还有三个比较特殊的权限，分别是：setuid，setgid，stick bit （粘滞位）。</p>
 <p>Setuid: 设置使文件在执行阶段具有文件所有者的权限. 典型的文件是 /usr/bin/passwd. 如果一般用户执行该文件, 则在执行过程中, 该文件可以获得root权限, 从而可以更改用户的密码。</p>
@@ -303,7 +411,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2019/08/28/28/">展开全文 >></a>
+      <a class="article-more-a" href="/2019/08/28/T1166/">展开全文 >></a>
     </p>
     
 
@@ -2286,11 +2394,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">流量分析</a>
+                <a href="javascript:void(0)" class="js-tag color2">终端日志分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">终端日志分析</a>
+                <a href="javascript:void(0)" class="js-tag color5">流量分析</a>
               </li>
             
             <div class="clearfix"></div>
