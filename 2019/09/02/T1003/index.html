@@ -10,14 +10,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="description" content="来自ATT&amp;amp;CK的描述凭证获取是从操作系统和软件中获取登录信息和密码的过程，通常为HASH散列或明文密码。然后使用凭证进行横向移动访问其他系统。 LSA（Local Security Authority）通过system权限访问主机lsass.exe进程，可以从中读取本地登录和域登录的明文密码。当服务在本地或域用户的上下文中运行时，其密码存储在注册表中。如果启用了自动登录，则此信息也将存储">
-<meta name="keywords" content="终端日志分析">
+<meta name="keywords" content="终端日志分析,凭证获取，威胁狩猎">
 <meta property="og:type" content="article">
 <meta property="og:title" content="T1003-windows-基于LSA凭证获取">
 <meta property="og:url" content="https://www.96007.club/2019/09/02/T1003/index.html">
 <meta property="og:site_name" content="12306Bro.blog">
 <meta property="og:description" content="来自ATT&amp;amp;CK的描述凭证获取是从操作系统和软件中获取登录信息和密码的过程，通常为HASH散列或明文密码。然后使用凭证进行横向移动访问其他系统。 LSA（Local Security Authority）通过system权限访问主机lsass.exe进程，可以从中读取本地登录和域登录的明文密码。当服务在本地或域用户的上下文中运行时，其密码存储在注册表中。如果启用了自动登录，则此信息也将存储">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-02T01:23:12.767Z">
+<meta property="og:updated_time" content="2019-09-05T08:02:19.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="T1003-windows-基于LSA凭证获取">
 <meta name="twitter:description" content="来自ATT&amp;amp;CK的描述凭证获取是从操作系统和软件中获取登录信息和密码的过程，通常为HASH散列或明文密码。然后使用凭证进行横向移动访问其他系统。 LSA（Local Security Authority）通过system权限访问主机lsass.exe进程，可以从中读取本地登录和域登录的明文密码。当服务在本地或域用户的上下文中运行时，其密码存储在注册表中。如果启用了自动登录，则此信息也将存储">
@@ -233,6 +233,7 @@
 <p>powershell：<a href="https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-PowerDump.ps1" target="_blank" rel="noopener">https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-PowerDump.ps1</a></p>
 <p>mimikatz wiki：<a href="https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump" target="_blank" rel="noopener">https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump</a></p>
 <p>关于更多转储明文密码你可以参考：<a href="https://pentestlab.blog/2018/04/04/dumping-clear-text-credentials/" target="_blank" rel="noopener">https://pentestlab.blog/2018/04/04/dumping-clear-text-credentials/</a></p>
+<p>关于更多的关于凭证获取的威胁狩猎你可以查看我的其他文章！</p>
 
     
 
@@ -267,6 +268,10 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">凭证获取，威胁狩猎</a>
         		</li>
       		
 		</ul>
@@ -495,6 +500,18 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">流量分析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">终端日志分析，逃避追踪，威胁狩猎</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">凭证获取，威胁狩猎</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">威胁狩猎</a>
               </li>
             
             <div class="clearfix"></div>
