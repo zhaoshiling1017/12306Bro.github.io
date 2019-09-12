@@ -179,7 +179,7 @@
             
 
   
-    <article id="post-Credential-Access-win-SAM-mimikatz" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Credential-Access-Win-PlaintextCredentials-Procdump" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class=" article-header">
@@ -187,7 +187,7 @@
   
     <h1 itemprop="name">
 	
-	      <a class="article-title" href="/2019/09/11/Credential-Access-win-SAM-mimikatz/" target="_blank">Credential-Access-win-SAM-mimikatz</a>
+	      <a class="article-title" href="/2019/09/12/Credential-Access-Win-PlaintextCredentials-Procdump/" target="_blank">利用Procdump进行windows明文凭证获取</a>
         
     </h1>
   
@@ -195,7 +195,143 @@
 
   
   
-<a href="/2019/09/11/Credential-Access-win-SAM-mimikatz/" class="archive-article-date">
+<a href="/2019/09/12/Credential-Access-Win-PlaintextCredentials-Procdump/" class="archive-article-date">
+        <time datetime="2019-09-12T04:53:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-12</time>
+</a>
+
+  
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="来自ATT-amp-CK的描述"><a href="#来自ATT-amp-CK的描述" class="headerlink" title="来自ATT&amp;CK的描述"></a>来自ATT&amp;CK的描述</h2><p>凭证获取是从操作系统和软件中获取登录信息和密码的过程，通常为HASH散列或明文密码。然后使用凭证进行横向移动访问其他系统。</p>
+<p>用户登录系统后，会生成各种凭据并将其存储在内存中的本地安全机构子系统服务（LSASS）进程中。这些凭证可以由管理用户或SYSTEM进行管理。</p>
+<p>SSPI是Security Support Provider Interface（Microsoft安全支持提供器接口）的英文缩写。安全支持提供程序接口（SSPI）允许应用程序使用计算机或网络上可用的各种安全模型，而无需更改安全系统的接口。SSPI不会记录登录凭据，因为这通常是操作系统处理的特权操作。</p>
+<p>一个安全支持提供商（SSP）包含在一个动态链接库，通过使一个或多个实现SSPI（DLL）安全包提供给应用程序。每个安全包都提供应用程序的SSPI函数调用和实际安全模型的功能之间的映射。</p>
+<p>以下SSP可用于获取凭证：</p>
+<p>Msv：交互式登录，批量登录和服务登录通过MSV身份验证包完成；</p>
+<p>Wdigest：摘要认证协议设计用于超文本传输协议（HTTP）和简单认证安全层（SASL）交换；</p>
+<p>Kerberos：Kerberos V5身份验证协议提供一个在客户端跟服务器端之间或者服务器与服务器之间的身份验证机制 （并且是相互的身份验证机制）；</p>
+<p>CredSSP：为远程桌面服务提供SSO和网络级别身份验证；</p>
+<h2 id="测试案例"><a href="#测试案例" class="headerlink" title="测试案例"></a>测试案例</h2><p>以下工具可用于枚举凭据：</p>
+<ul>
+<li>Windows凭据编辑器</li>
+<li>Mimikatz</li>
+</ul>
+<p>除了内存技术，LSASS进程内存可以从目标主机转储并在本地系统上进行分析。</p>
+<p>例如，在目标主机上使用procdump：</p>
+<ul>
+<li>procdump -ma lsass.exe lsass_dump</li>
+</ul>
+<p>在本地，运行mimikatz：</p>
+<ul>
+<li>sekurlsa::Minidump lsassdump.dmp</li>
+<li>sekurlsa::logonPasswords</li>
+</ul>
+<h2 id="检测日志"><a href="#检测日志" class="headerlink" title="检测日志"></a>检测日志</h2><p>sysmon日志</p>
+<h2 id="测试复现"><a href="#测试复现" class="headerlink" title="测试复现"></a>测试复现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Microsoft Windows [版本 6.1.7601]</span><br><span class="line">版权所有 (c) 2009 Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator&gt;cd C:\Users\Administrator\Desktop\Procdump</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\Procdump&gt;procdump64.exe -ma lsass.exe 1.dmp</span><br><span class="line"></span><br><span class="line">ProcDump v8.0 - Writes process dump files</span><br><span class="line">Copyright (C) 2009-2016 Mark Russinovich</span><br><span class="line">Sysinternals - www.sysinternals.com</span><br><span class="line">With contributions from Andrew Richards</span><br><span class="line"></span><br><span class="line">[13:42:47] Dump 1 initiated: C:\Users\Administrator\Desktop\Procdump\1.dmp</span><br><span class="line">[13:42:50] Dump 1 writing: Estimated dump file size is 50 MB.</span><br><span class="line">[13:42:51] Dump 1 complete: 50 MB written in 3.3 seconds</span><br><span class="line">[13:42:51] Dump count reached.</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\Procdump&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试留痕"><a href="#测试留痕" class="headerlink" title="测试留痕"></a>测试留痕</h2><p>sysmon事件，进程创建、进程访问、进程结束</p>
+<h2 id="检测规则-思路"><a href="#检测规则-思路" class="headerlink" title="检测规则/思路"></a>检测规则/思路</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">title: 明文获取凭证——Procdum</span><br><span class="line">description: windows server 2008 模拟测试结果</span><br><span class="line">status: experimental</span><br><span class="line">author: 12306Bro</span><br><span class="line">logsource:</span><br><span class="line">    product: windows</span><br><span class="line">    service: sysmon</span><br><span class="line">detection:</span><br><span class="line">    selection1:</span><br><span class="line">        EventID: 1</span><br><span class="line">        Image: &apos;*\procdump*.exe&apos;</span><br><span class="line">        Product: ProcDump</span><br><span class="line">        OriginalFileName: procdump</span><br><span class="line">        CommandLine: &apos;procdump*.exe  -ma lsass.exe *.dmp&apos;</span><br><span class="line">    selection2:</span><br><span class="line">        EventID: 10</span><br><span class="line">        SourceImage: &apos;*\procdump*.exe&apos;</span><br><span class="line">        TargetImage: &apos;C:\Windows\system32\lsass.exe&apos;</span><br><span class="line">    timeframe: last 1m</span><br><span class="line">    condition: selection1 and selection2</span><br><span class="line">level: medium</span><br></pre></td></tr></table></figure>
+
+<p>建议您关注一下sysmon10.2的新特性OriginalFileName，经过安全人员研究测试发现，在进程创建事件中，procdump修改为ABC，但OriginalFileName依旧能够清晰的识别出该款工具是procdump。</p>
+<h2 id="参考推荐"><a href="#参考推荐" class="headerlink" title="参考推荐"></a>参考推荐</h2><p>MITRE-ATT&amp;CK-T1003：<a href="https://attack.mitre.org/techniques/T1003/" target="_blank" rel="noopener">https://attack.mitre.org/techniques/T1003/</a></p>
+<p>windows SSPI模型：<a href="https://docs.microsoft.com/zh-cn/windows/win32/secauthn/sspi-model" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/windows/win32/secauthn/sspi-model</a></p>
+<p>MSV身份验证包：<a href="https://blog.csdn.net/lionzl/article/details/7725116" target="_blank" rel="noopener">https://blog.csdn.net/lionzl/article/details/7725116</a></p>
+<p>Wdigest摘要认证协议：<a href="https://www.4hou.com/info/news/8126.html" target="_blank" rel="noopener">https://www.4hou.com/info/news/8126.html</a></p>
+<p>Kerberos身份认证协议技术参考：<a href="https://www.cnblogs.com/adylee/articles/893448.html" target="_blank" rel="noopener">https://www.cnblogs.com/adylee/articles/893448.html</a></p>
+<p>CredSSP凭证安全支持提供程序协议：<a href="https://docs.microsoft.com/zh-cn/windows/win32/secauthn/credential-security-support-provider" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/windows/win32/secauthn/credential-security-support-provider</a></p>
+<h3 id="其他凭证获取及检测文章"><a href="#其他凭证获取及检测文章" class="headerlink" title="其他凭证获取及检测文章"></a>其他凭证获取及检测文章</h3><p>利用SAM数据库获取本地用户hash ：<a href="https://www.96007.club/2019/09/11/Credential-Access-win-SAM-Reg/">https://www.96007.club/2019/09/11/Credential-Access-win-SAM-Reg/</a></p>
+<p>利用LSA获取用户账号密码：<a href="https://www.96007.club/2019/09/02/Credential-Access-win-LSA-mimikatz/">https://www.96007.club/2019/09/02/Credential-Access-win-LSA-mimikatz/</a></p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">凭证获取</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/威胁狩猎//" class="article-tag-list-link color5">威胁狩猎</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/09/12/Credential-Access-Win-PlaintextCredentials-Procdump/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Credential-Access-win-SAM-Reg" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class=" article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	      <a class="article-title" href="/2019/09/11/Credential-Access-win-SAM-Reg/" target="_blank">利用SAM数据库获取本地用户hash</a>
+        
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/09/11/Credential-Access-win-SAM-Reg/" class="archive-article-date">
         <time datetime="2019-09-11T02:18:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-11</time>
 </a>
 
@@ -240,6 +376,7 @@
 <p>powershell：<a href="https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-PowerDump.ps1" target="_blank" rel="noopener">https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-PowerDump.ps1</a></p>
 <p>mimikatz wiki：<a href="https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump" target="_blank" rel="noopener">https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump</a></p>
 <p>关于更多通过SAM数据库获取本地用户hash你可以参考：<a href="https://www.4hou.com/technology/10878.html" target="_blank" rel="noopener">https://www.4hou.com/technology/10878.html</a></p>
+<h3 id="其他凭证获取及检测文章"><a href="#其他凭证获取及检测文章" class="headerlink" title="其他凭证获取及检测文章"></a>其他凭证获取及检测文章</h3><p>利用LSA获取用户账号密码：<a href="https://www.96007.club/2019/09/02/Credential-Access-win-LSA-mimikatz/">https://www.96007.club/2019/09/02/Credential-Access-win-LSA-mimikatz/</a></p>
 
     
 
@@ -281,7 +418,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2019/09/11/Credential-Access-win-SAM-mimikatz/">展开全文 >></a>
+      <a class="article-more-a" href="/2019/09/11/Credential-Access-win-SAM-Reg/">展开全文 >></a>
     </p>
     
 
@@ -311,7 +448,7 @@
 
 
   
-    <article id="post-T1003-sysmon" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Bypass-sysmon" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class=" article-header">
@@ -319,7 +456,7 @@
   
     <h1 itemprop="name">
 	
-	      <a class="article-title" href="/2019/09/02/T1003-sysmon/" target="_blank">windows常见绕过sysmon的方法</a>
+	      <a class="article-title" href="/2019/09/02/Bypass-sysmon/" target="_blank">windows常见绕过sysmon的方法</a>
         
     </h1>
   
@@ -327,7 +464,7 @@
 
   
   
-<a href="/2019/09/02/T1003-sysmon/" class="archive-article-date">
+<a href="/2019/09/02/Bypass-sysmon/" class="archive-article-date">
         <time datetime="2019-09-02T13:54:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
 </a>
 
@@ -416,7 +553,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2019/09/02/T1003-sysmon/">展开全文 >></a>
+      <a class="article-more-a" href="/2019/09/02/Bypass-sysmon/">展开全文 >></a>
     </p>
     
 
@@ -446,7 +583,7 @@
 
 
   
-    <article id="post-T1003" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Credential-Access-win-LSA-mimikatz" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class=" article-header">
@@ -454,7 +591,7 @@
   
     <h1 itemprop="name">
 	
-	      <a class="article-title" href="/2019/09/02/T1003/" target="_blank">T1003-windows-基于LSA凭证获取</a>
+	      <a class="article-title" href="/2019/09/02/Credential-Access-win-LSA-mimikatz/" target="_blank">利用LSA获取用户账号密码</a>
         
     </h1>
   
@@ -462,7 +599,7 @@
 
   
   
-<a href="/2019/09/02/T1003/" class="archive-article-date">
+<a href="/2019/09/02/Credential-Access-win-LSA-mimikatz/" class="archive-article-date">
         <time datetime="2019-09-02T01:17:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
 </a>
 
@@ -498,7 +635,6 @@
 <p>powershell：<a href="https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-PowerDump.ps1" target="_blank" rel="noopener">https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-PowerDump.ps1</a></p>
 <p>mimikatz wiki：<a href="https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump" target="_blank" rel="noopener">https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump</a></p>
 <p>关于更多转储明文密码你可以参考：<a href="https://pentestlab.blog/2018/04/04/dumping-clear-text-credentials/" target="_blank" rel="noopener">https://pentestlab.blog/2018/04/04/dumping-clear-text-credentials/</a></p>
-<p>关于更多的关于凭证获取的威胁狩猎你可以查看我的其他文章！</p>
 
     
 
@@ -540,7 +676,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2019/09/02/T1003/">展开全文 >></a>
+      <a class="article-more-a" href="/2019/09/02/Credential-Access-win-LSA-mimikatz/">展开全文 >></a>
     </p>
     
 
@@ -570,7 +706,7 @@
 
 
   
-    <article id="post-T1166" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-linux-Setuid-and-Setgid" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class=" article-header">
@@ -578,7 +714,7 @@
   
     <h1 itemprop="name">
 	
-	      <a class="article-title" href="/2019/08/28/T1166/" target="_blank">ATT&amp;CK解读——T1166</a>
+	      <a class="article-title" href="/2019/08/28/linux-Setuid-and-Setgid/" target="_blank">ATT&amp;CK解读——T1166</a>
         
     </h1>
   
@@ -586,7 +722,7 @@
 
   
   
-<a href="/2019/08/28/T1166/" class="archive-article-date">
+<a href="/2019/08/28/linux-Setuid-and-Setgid/" class="archive-article-date">
         <time datetime="2019-08-28T14:42:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-28</time>
 </a>
 
@@ -705,7 +841,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2019/08/28/T1166/">展开全文 >></a>
+      <a class="article-more-a" href="/2019/08/28/linux-Setuid-and-Setgid/">展开全文 >></a>
     </p>
     
 
@@ -2696,11 +2832,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">逃避追踪</a>
+                <a href="javascript:void(0)" class="js-tag color5">凭证获取</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">凭证获取</a>
+                <a href="javascript:void(0)" class="js-tag color5">逃避追踪</a>
               </li>
             
             <div class="clearfix"></div>
