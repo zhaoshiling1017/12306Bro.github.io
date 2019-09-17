@@ -6,21 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://www.96007.club">
-  <title>ATT&amp;CK解读——T1166 | 12306Bro.blog</title>
+  <title>检测windows下RDP/LDAP密码喷射技术 | 12306Bro.blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="最近事情比较多，一方面要做赋能培训，还要做研究报告，又要支持项目，整个人都是蒙的。哦，对了还有ATT&amp;amp;CK解读……. 我太难了！ T1166-linux-Setuid and Setgid来自ATT&amp;amp;CK的描述当在Linux或macOS上为应用程序设置setuid或setgid时，这意味着应用程序将分别以拥有用户或组的权限运行 。通常，应用程序在当前用户的上下文中运行，无论哪个用">
-<meta name="keywords" content="终端日志分析">
+  <meta name="description" content="来自ATT&amp;amp;CK的描述当密码未知或获得密码哈希值时，攻击者可以使用暴力破解技术尝试访问帐户。 攻击者可能会在操作期间尝试暴力破解登录，这是一个风险较高的选项，因为它可能导致大量身份验证失败记录和帐户锁定，具体取决于组织的登录失败策略。 密码喷射技术是使用一个密码（例如，“Password01”）或一小组密码，其匹配域的复杂性策略并且可以是常用密码。尝试使用该密码的不同账户进行登录，从而避免">
+<meta name="keywords" content="终端日志分析,密码喷射">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ATT&amp;CK解读——T1166">
-<meta property="og:url" content="https://www.96007.club/2019/08/28/linux-Setuid-and-Setgid/index.html">
+<meta property="og:title" content="检测windows下RDP&#x2F;LDAP密码喷射技术">
+<meta property="og:url" content="https://www.96007.club/2019/09/17/Credential-Access-win-Password-spraying/index.html">
 <meta property="og:site_name" content="12306Bro.blog">
-<meta property="og:description" content="最近事情比较多，一方面要做赋能培训，还要做研究报告，又要支持项目，整个人都是蒙的。哦，对了还有ATT&amp;amp;CK解读……. 我太难了！ T1166-linux-Setuid and Setgid来自ATT&amp;amp;CK的描述当在Linux或macOS上为应用程序设置setuid或setgid时，这意味着应用程序将分别以拥有用户或组的权限运行 。通常，应用程序在当前用户的上下文中运行，无论哪个用">
+<meta property="og:description" content="来自ATT&amp;amp;CK的描述当密码未知或获得密码哈希值时，攻击者可以使用暴力破解技术尝试访问帐户。 攻击者可能会在操作期间尝试暴力破解登录，这是一个风险较高的选项，因为它可能导致大量身份验证失败记录和帐户锁定，具体取决于组织的登录失败策略。 密码喷射技术是使用一个密码（例如，“Password01”）或一小组密码，其匹配域的复杂性策略并且可以是常用密码。尝试使用该密码的不同账户进行登录，从而避免">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-05T09:45:45.528Z">
+<meta property="og:updated_time" content="2019-09-17T02:19:21.169Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ATT&amp;CK解读——T1166">
-<meta name="twitter:description" content="最近事情比较多，一方面要做赋能培训，还要做研究报告，又要支持项目，整个人都是蒙的。哦，对了还有ATT&amp;amp;CK解读……. 我太难了！ T1166-linux-Setuid and Setgid来自ATT&amp;amp;CK的描述当在Linux或macOS上为应用程序设置setuid或setgid时，这意味着应用程序将分别以拥有用户或组的权限运行 。通常，应用程序在当前用户的上下文中运行，无论哪个用">
+<meta name="twitter:title" content="检测windows下RDP&#x2F;LDAP密码喷射技术">
+<meta name="twitter:description" content="来自ATT&amp;amp;CK的描述当密码未知或获得密码哈希值时，攻击者可以使用暴力破解技术尝试访问帐户。 攻击者可能会在操作期间尝试暴力破解登录，这是一个风险较高的选项，因为它可能导致大量身份验证失败记录和帐户锁定，具体取决于组织的登录失败策略。 密码喷射技术是使用一个密码（例如，“Password01”）或一小组密码，其匹配域的复杂性策略并且可以是常用密码。尝试使用该密码的不同账户进行登录，从而避免">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -178,14 +178,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-linux-Setuid-and-Setgid" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Credential-Access-win-Password-spraying" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class=" article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      ATT&amp;CK解读——T1166
+      检测windows下RDP/LDAP密码喷射技术
     </h1>
   
 
@@ -197,8 +197,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2019/08/28/linux-Setuid-and-Setgid/" class="archive-article-date">
-        <time datetime="2019-08-28T14:42:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-28</time>
+<a href="/2019/09/17/Credential-Access-win-Password-spraying/" class="archive-article-date">
+        <time datetime="2019-09-17T00:59:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-17</time>
 </a>
 
   
@@ -207,78 +207,52 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p> 最近事情比较多，一方面要做赋能培训，还要做研究报告，又要支持项目，整个人都是蒙的。哦，对了还有ATT&amp;CK解读……. 我太难了！</p>
-<h1 id="T1166-linux-Setuid-and-Setgid"><a href="#T1166-linux-Setuid-and-Setgid" class="headerlink" title="T1166-linux-Setuid and Setgid"></a>T1166-linux-Setuid and Setgid</h1><h2 id="来自ATT-amp-CK的描述"><a href="#来自ATT-amp-CK的描述" class="headerlink" title="来自ATT&amp;CK的描述"></a>来自ATT&amp;CK的描述</h2><p>当在Linux或macOS上为应用程序设置setuid或setgid时，这意味着应用程序将分别以拥有用户或组的权限运行 。通常，应用程序在当前用户的上下文中运行，无论哪个用户或组拥有该应用程序。有些场景下我们需要让执行该命令的用户以该命令拥有者（或该文件所属组）的权限去执行，比如普通用户执行passwd时会拥有root的权限，这样就可以修改/etc/passwd这个文件了。任何用户都可以指定为自己的应用程序设置的setuid或setgid标志，而不是在sudoers文件中创建必须由root用户完成的条件。在查看文件的属性时，它的标志为：s，会出现在x的地方，例：-rwsr-xr-x 。可以使用ls -l查看文件属性。</p>
-<h2 id="关于Setuid-and-Setgid详解"><a href="#关于Setuid-and-Setgid详解" class="headerlink" title="关于Setuid and Setgid详解"></a>关于Setuid and Setgid详解</h2><p>要讲Setuid和Setgid就不得不提linux的文件权限机制。文件权限的机制是Linux系统的一大特色，初学Linux的人都知道可读（r）、可写（w）、可执行（x）这都是比较基本的权限。但是Linux还有三个比较特殊的权限，分别是：setuid，setgid，stick bit （粘滞位）。</p>
-<p>Setuid: 设置使文件在执行阶段具有文件所有者的权限. 典型的文件是 /usr/bin/passwd. 如果一般用户执行该文件, 则在执行过程中, 该文件可以获得root权限, 从而可以更改用户的密码。</p>
-<p>Setgid: 该权限只对目录有效. 目录被设置该位后, 任何用户在此目录下创建的文件都具有和该目录所属的组相同的组。</p>
-<p>Stick bit: 该位可以理解为防删除位. 一个文件是否可以被某用户删除, 主要取决于该文件所属的组是否对该用户具有写权限. 如果没有写权限, 则这个目录下的所有文件都不能被删除, 同时也不能添加新的文件. 如果希望用户能够添加文件但同时不能删除文件, 则可以对文件使用stick bit位. 设置该位后, 就算用户对目录具有写权限, 也不能删除该文件。</p>
-<h2 id="如何使用Setuid-and-Setgid"><a href="#如何使用Setuid-and-Setgid" class="headerlink" title="如何使用Setuid and Setgid"></a>如何使用Setuid and Setgid</h2><p>操作这些标志与操作文件权限的命令是一样的, 都是 chmod. 有两种方法来操作：</p>
-<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>chmod u+s xxx # 设置setuid权限，加上setuid标志(setuid 只对文件有效)</p>
-<p>chmod g+s xxx # 设置setgid权限，加上setgid标志 (setgid 只对目录有效)</p>
-<p>chmod o+t xxx # 设置stick bit权限，针对目录</p>
-<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p> 采用八进制方式. 对一般文件通过三组八进制数字来置标志, 如 666, 777, 644等. 如果设置这些特殊标志, 则在这组</p>
-<p>数字之外外加一组八进制数字. 如4666, 2777等</p>
-<p>chmod 4775 xxx # 设置setuid权限</p>
-<p>chmod 2775 xxx # 设置setgid权限</p>
-<p>chmod 1775 xxx # 设置stick bit权限，针对目录 </p>
-<p> 在这里只讲第一位8进制代表权限</p>
-<p>0: 不设置特殊权限 </p>
-<p>1：只设置sticky </p>
-<p>2：只设置SGID </p>
-<p>3：只设置SGID和sticky </p>
-<p>4：只设置SUID </p>
-<p>5：只设置SUID和sticky </p>
-<p>6：只设置SUID和SGID </p>
-<p>7：设置3种权限</p>
-<p>设置完这些标志后, 可以用 ls -l 来查看. 如果有这些标志, 则会在原来的执行标志位置上显示。那么原来的执行标志x到哪里去了呢? 系统是这样规定的, 如果本来在该位上有x, 则这些特殊标志显示为小写字母 (s, s, t). 否则, 显示为大写字母 (S, S, T)。</p>
-<p>注：在UNIX系统家族里，文件或目录权限的控制分别以读取，写入，执行3种一般权限来区分，另有3种特殊权限</p>
-<p>可供运用，再搭配拥有者与所属群组管理权限范围。您可以使用chmod指令去变更文件与目录的权限，设置方式</p>
-<p>采用文字或数字代号皆可。符号连接的权限无法变更，如果您对符号连接修改权限，其改变会作用在被连接的原始</p>
-<p>文件。权限范围的表示法如下：</p>
-<p>　　u：User，即文件或目录的拥有者。</p>
-<p>　　g：Group，即文件或目录的所属群组。</p>
-<p>　　o：Other，除了文件或目录拥有者或所属群组之外，其他用户皆属于这个范围。</p>
-<p>　　a：All，即全部的用户，包含拥有者，所属群组以及其他用户。</p>
-<p>　　有关权限代号的部分，列表于下：</p>
-<p>　　r：读取权限，数字代号为”4”。</p>
-<p>　　w：写入权限，数字代号为”2”。</p>
-<p>　　x：执行或切换权限，数字代号为”1”。</p>
-<p>　　-：不具任何权限，数字代号为”0”。</p>
-<p>　　s：特殊?b&gt;功能说明：变更文件或目录的权限。</p>
-<h2 id="检测日志"><a href="#检测日志" class="headerlink" title="检测日志"></a>检测日志</h2><p>那么如果有恶意用户在主机内执行了此类操作，我们应该利用什么日志进行检测分析呢？首选bash历史记录！！！</p>
-<h2 id="测试复现"><a href="#测试复现" class="headerlink" title="测试复现"></a>测试复现</h2><h3 id="方法一-1"><a href="#方法一-1" class="headerlink" title="方法一"></a>方法一</h3><p>icbc@icbc:/hacker$ ls -l</p>
-<p>-rw-r–r–  1 root root    0 7月  19 17:22 bas.txt</p>
-<p>icbc@icbc:/hacker$ sudo chmod u+s bas.txt </p>
-<p>icbc@icbc:/hacker$ ls -l</p>
-<p>-rwSr–r–  1 root root    0 7月  19 17:22 bas.txt</p>
-<p>icbc@icbc:/hacker$ sudo chmod g+s bas.txt </p>
-<p>icbc@icbc:/hacker$ ls -l</p>
-<p>-rwSr-Sr–  1 root root    0 7月  19 17:22 bas.txt</p>
-<h3 id="方法二-1"><a href="#方法二-1" class="headerlink" title="方法二"></a>方法二</h3><p>icbc@icbc:/hacker$ ls -l</p>
-<p>-rwxr-xr-x  1 root root    0 8月  28 15:16 admin.txt</p>
-<p>icbc@icbc:/hacker$ sudo chmod 4777 admin.txt </p>
-<p>icbc@icbc:/hacker$ ls -l</p>
-<p>-rwsrwxrwx  1 root root    0 8月  28 15:16 admin.txt</p>
-<p>icbc@icbc:/hacker$ sudo chmod 2777 admin.txt </p>
-<p>icbc@icbc:/hacker$ ls -l</p>
-<p>-rwxrwsrwx  1 root root    0 8月  28 15:16 admin.txt</p>
-<h2 id="测试留痕"><a href="#测试留痕" class="headerlink" title="测试留痕"></a>测试留痕</h2><h3 id="方法一-2"><a href="#方法一-2" class="headerlink" title="方法一"></a>方法一</h3><p>icbc@icbc:/hacker$ history</p>
-<p>650  chmod u+s bas.txt </p>
-<p>651  sudo chmod u+s bas.txt </p>
-<p>652  ls -l</p>
-<p>653  sudo chmod g+s bas.txt </p>
-<h3 id="方法二-2"><a href="#方法二-2" class="headerlink" title="方法二"></a>方法二</h3><p>icbc@icbc:/hacker$ history</p>
-<p>683  sudo chmod 4777 admin.txt </p>
-<p>684  ls -l</p>
-<p>685  sudo chmod 2777 admin.txt </p>
-<h2 id="检测规则-思路"><a href="#检测规则-思路" class="headerlink" title="检测规则/思路"></a>检测规则/思路</h2><p>splunk检测规则</p>
-<p>index=linux sourcetype=bash_history “chmod <code>4***</code>“ OR “chmod <code>2***</code>“ OR “chmod u+s” OR “chmod g+s” | table host,user_name,bash_command</p>
-<p>值得注意的是：基于此类特征可能会产生误报，如果管理制度执行到位的话，误报会非常的小。</p>
-<h2 id="参考推荐"><a href="#参考推荐" class="headerlink" title="参考推荐"></a>参考推荐</h2><p>MITRE-ATT&amp;CK-T1166：<a href="https://attack.mitre.org/techniques/T1166/" target="_blank" rel="noopener">https://attack.mitre.org/techniques/T1166/</a></p>
-<p>linux文件特殊权限：<a href="https://www.cnblogs.com/patriot/p/7874725.html" target="_blank" rel="noopener">https://www.cnblogs.com/patriot/p/7874725.html</a></p>
-<p>linux中chmod命令详解：<a href="https://www.cnblogs.com/lianstyle/p/8571975.html" target="_blank" rel="noopener">https://www.cnblogs.com/lianstyle/p/8571975.html</a></p>
-<p>linux下的chmod参数详解：<a href="https://blog.csdn.net/taiyang1987912/article/details/41121131" target="_blank" rel="noopener">https://blog.csdn.net/taiyang1987912/article/details/41121131</a></p>
+    <h2 id="来自ATT-amp-CK的描述"><a href="#来自ATT-amp-CK的描述" class="headerlink" title="来自ATT&amp;CK的描述"></a>来自ATT&amp;CK的描述</h2><p>当密码未知或获得密码哈希值时，攻击者可以使用暴力破解技术尝试访问帐户。</p>
+<p>攻击者可能会在操作期间尝试暴力破解登录，这是一个风险较高的选项，因为它可能导致大量身份验证失败记录和帐户锁定，具体取决于组织的登录失败策略。</p>
+<p>密码喷射技术是使用一个密码（例如，“Password01”）或一小组密码，其匹配域的复杂性策略并且可以是常用密码。尝试使用该密码的<strong>不同账户</strong>进行登录，从而避免触发组织内的策略导致账户锁定。</p>
+<p>通常，在密码喷射时使用常用端口上的管理服务。通用目标服务包括以下内容：</p>
+<ul>
+<li>SSH（22/TCP）</li>
+<li>Telnet（23/TCP）</li>
+<li>FTP（21/ TCP）</li>
+<li>NetBIOS/SMB/Samba（139/TCP和445/TCP）</li>
+<li>LDAP（389/TCP）</li>
+<li>Kerberos（88/TCP）</li>
+<li>RDP /终端服务（3389/TCP）</li>
+<li>HTTP / HTTP管理服务（80/TCP和443/TCP）</li>
+<li>MSSQL（1433/TCP）</li>
+<li>Oracle（1521/TCP）</li>
+<li>MySQL（3306/TCP）</li>
+<li>VNC（5900/TCP）</li>
+</ul>
+<h2 id="RDP暴力破解"><a href="#RDP暴力破解" class="headerlink" title="RDP暴力破解"></a>RDP暴力破解</h2><p>远程桌面协议（RDP, Remote Desktop Protocol）是一个多通道（multi-channel）的协议，让用户（客户端或称“本地电脑”）连上提供微软终端机服务的电脑（服务器端或称“远程电脑”）。大部分的Windows都有客户端所需软件。其他操作系统也有这些客户端软件，例如Linux、FreeBSD、Mac OS X。服务端电脑方面，则听取送到TCP3389端口的数据。</p>
+<p>当系统密码设置较为简单时，攻击者可以利用枚举账户密码的方法进行破解登录。</p>
+<h2 id="密码喷洒攻击"><a href="#密码喷洒攻击" class="headerlink" title="密码喷洒攻击"></a>密码喷洒攻击</h2><p>值得注意的是，很多时候人们容易把密码暴力破解和密码喷射技术搞混，“密码喷射攻击”（Password Spray Attack）并不等同于“密码爆破攻击”（Brute Force Attack）。事实上，这两种攻击是相反的。</p>
+<p>在密码爆破攻击中，黑客选择一个易受攻击的 ID 并一个接一个地输入密码，希望有一些密码可以让他们进入。基本上，密码爆破是用多个密码尝试破解同一个 ID。而密码喷射攻击，是用一个密码来尝试多个用户 ID，以便至少有一个用户 ID 被泄露。对于密码喷射攻击，黑客使用社交工程或其他网络钓鱼方法收集多个用户 ID。通常情况下，至少有一个用户使用简单的密码，如12345678甚至是 p@ssw0rd。</p>
+<p>在密码喷射攻击中，黑客会为其收集的所有用户 ID 精心构造密码。因此，密码喷射攻击可以定义为将相同的密码应用于组织中的多个用户帐户，目的是安全的对其中一个帐户进行未授权访问。</p>
+<p>暴力破解的问题在于，在使用不同密码进行一定次数的尝试后，系统可能会被锁定。为了避免这种情况，产生了收集用户 ID 并将可能的密码应用于它们的想法。使用密码喷射攻击时，黑客也会采取一些预防措施。例如，如果他们尝试将 password1应用于所有用户帐户，则在完成第一轮后，他们不会立即开始将 password2应用于这些帐户。他们将在黑客攻击中留出至少30分钟的时间。</p>
+<h2 id="测试案例"><a href="#测试案例" class="headerlink" title="测试案例"></a>测试案例</h2><p><strong>声明：暂无案例，仅文字描述</strong></p>
+<p>由于AD用户设置锁定阈值为5，因此我们可以为每个用户尝试4个不同的密码，然后我们等待30分钟或者比30分钟更长的时间（锁定窗口，其中DC保持锁定计数，此后重置为0），然后再试一次。攻击者可以通过收集有关AD域环境的密码策略信息，帮助攻击者能够更好地使用密码喷射攻击。</p>
+<p>密码喷射攻击通常应用到SMB共享或RDP服务，所以我们可以从这两点入手，这两类服务在企业内网中是非常常见的。密码喷射攻击会产生大量的windows事件ID <strong>4625登录失败</strong>。当发现大量此类事件时，它值得引起你的注意。</p>
+<p>当攻击者通过更改连接的服务来避免windows产生事件ID4625，即不再连接SMB或者RDP服务，而是连接到域控制器上的LDAP服务，许多组织都在集中精力去监视4625事件。但如果连接到LDAP服务进行密码喷射攻击，则不会记录4625事件。则会记录Kerberos日志事件<strong>4771</strong>，并监测<strong>“Kerberos预身份验证失败”</strong>。在事件ID 4771中，<strong>失败代码为“0x18”,</strong>这意味着密码错误。</p>
+<p>在接入域的计算机上执行密码喷射时，如果攻击者在此系统上（即域内任意主机系统）运行密码喷射攻击，则会在此主机上记录<strong>事件ID4648（“使用显式凭据尝试登录”）</strong>。如果在几秒钟内记录了大量4648事件，这种情况是异常的，你需要重点关注。</p>
+<h2 id="检测日志"><a href="#检测日志" class="headerlink" title="检测日志"></a>检测日志</h2><p>在AD环境中进行密码喷射攻击，你可以通过启用适当的日志记录和有效的关联来进行检测和发现。</p>
+<p>主要的日志审核策略：</p>
+<ul>
+<li>域控制器：事件ID4625 审核登录（成功和失败）</li>
+<li>域控制器：事件ID4771 审核Kerberos身份验证服务 （成功和失败）</li>
+<li>所有系统：事件ID4648 审核登录（成功和失败）</li>
+</ul>
+<h2 id="测试复现"><a href="#测试复现" class="headerlink" title="测试复现"></a>测试复现</h2><p>暂无</p>
+<h2 id="测试留痕"><a href="#测试留痕" class="headerlink" title="测试留痕"></a>测试留痕</h2><p>暂无</p>
+<h2 id="检测规则-思路"><a href="#检测规则-思路" class="headerlink" title="检测规则/思路"></a>检测规则/思路</h2><p>在一分钟内，同一主机事件ID为4625的事件大于50个；</p>
+<p>在一分钟内，同一主机失败代码为0x18，事件ID为4771的事件大于50个；<strong>值得注意的是：此规则只适用于域控制器</strong></p>
+<p>在一分钟内，同一主机上事件ID为4648的事件大于100个；</p>
+<p>您可以根据您的具体环境通过缩短时间阈值或事件数量阈值来调整每个告警规则。</p>
+<h2 id="参考推荐"><a href="#参考推荐" class="headerlink" title="参考推荐"></a>参考推荐</h2><p>MITRE-ATT&amp;CK-T1110：<a href="https://attack.mitre.org/techniques/T1110/" target="_blank" rel="noopener">https://attack.mitre.org/techniques/T1110/</a></p>
+<p>LDAP轻量目录访问协议：<a href="https://baike.baidu.com/item/LDAP/2875565?fr=aladdin" target="_blank" rel="noopener">https://baike.baidu.com/item/LDAP/2875565?fr=aladdin</a></p>
+<p>爆破工具 Hydra 简单使用：<a href="https://www.jianshu.com/p/4da49f179cee" target="_blank" rel="noopener">https://www.jianshu.com/p/4da49f179cee</a></p>
+<p>CrackMapExec：一款针对大型Windows活动目录(AD)的后渗透工具：<a href="https://www.freebuf.com/sectool/184573.html" target="_blank" rel="noopener">https://www.freebuf.com/sectool/184573.html</a></p>
 
     
 
@@ -293,7 +267,7 @@
           </li>
           <li>
             <strong>本文链接：</strong>
-            <a href="https://www.96007.club/2019/08/28/linux-Setuid-and-Setgid/" title="ATT&amp;CK解读——T1166" target="_blank">https://www.96007.club/2019/08/28/linux-Setuid-and-Setgid/</a>
+            <a href="https://www.96007.club/2019/09/17/Credential-Access-win-Password-spraying/" title="检测windows下RDP/LDAP密码喷射技术" target="_blank">https://www.96007.club/2019/09/17/Credential-Access-win-Password-spraying/</a>
           </li>
           <li>
             <strong>版权声明： </strong>
@@ -313,6 +287,10 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">密码喷射</a>
         		</li>
       		
 		</ul>
@@ -379,7 +357,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://www.96007.club/2019/08/28/linux-Setuid-and-Setgid/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://www.96007.club/2019/09/17/Credential-Access-win-Password-spraying/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -394,18 +372,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/09/02/Credential-Access-win-LSA-mimikatz/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          利用LSA获取用户账号密码
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/08/21/21/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">windows终端事件日志监控指南</div>
+    <a href="/2019/09/12/Credential-Access-Win-PlaintextCredentials-Procdump/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">利用Procdump进行windows明文凭证获取</div>
       <i class="icon-circle-right"></i>
     </a>
   
