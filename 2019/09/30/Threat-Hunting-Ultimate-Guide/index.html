@@ -6,16 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://www.96007.club">
-  <title>Category: 威胁狩猎 | 12306Bro.blog</title>
+  <title>威胁狩猎终极指南 | 12306Bro.blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="12306Bro.blog">
-<meta property="og:url" content="https://www.96007.club/categories/威胁狩猎/index.html">
+  <meta name="description" content="声明：本文档由12306Bro个人业余时间翻译，个人行为与公司无任何关系！译文来源INFOSEC站点相关文档。如您对翻译文档内容有异议，请将原文文档做为主要参考，原文版权由博客站及其相关成员持有并保留。翻译文章禁止用于任何商业用途，仅供交流与学习。 介绍从本质上讲，网络世界中的威胁狩猎可能与现实世界中的狩猎非常相似。它需要具有独特技能的专业人员，他们具有一定的耐心，批判性思维，创造力和敏锐的洞察力">
+<meta name="keywords" content="威胁狩猎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="威胁狩猎终极指南">
+<meta property="og:url" content="https://www.96007.club/2019/09/30/Threat-Hunting-Ultimate-Guide/index.html">
 <meta property="og:site_name" content="12306Bro.blog">
+<meta property="og:description" content="声明：本文档由12306Bro个人业余时间翻译，个人行为与公司无任何关系！译文来源INFOSEC站点相关文档。如您对翻译文档内容有异议，请将原文文档做为主要参考，原文版权由博客站及其相关成员持有并保留。翻译文章禁止用于任何商业用途，仅供交流与学习。 介绍从本质上讲，网络世界中的威胁狩猎可能与现实世界中的狩猎非常相似。它需要具有独特技能的专业人员，他们具有一定的耐心，批判性思维，创造力和敏锐的洞察力">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/30/uY91Et.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/30/uJz84U.png">
+<meta property="og:updated_time" content="2019-09-30T07:41:46.054Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="12306Bro.blog">
+<meta name="twitter:title" content="威胁狩猎终极指南">
+<meta name="twitter:description" content="声明：本文档由12306Bro个人业余时间翻译，个人行为与公司无任何关系！译文来源INFOSEC站点相关文档。如您对翻译文档内容有异议，请将原文文档做为主要参考，原文版权由博客站及其相关成员持有并保留。翻译文章禁止用于任何商业用途，仅供交流与学习。 介绍从本质上讲，网络世界中的威胁狩猎可能与现实世界中的狩猎非常相似。它需要具有独特技能的专业人员，他们具有一定的耐心，批判性思维，创造力和敏锐的洞察力">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/09/30/uY91Et.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -173,474 +181,227 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Threat-Hunting-Ultimate-Guide" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class=" article-header">
   
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/09/26/ways-to-detect-and-mitigate-powershell-attacks/" class="archive-article-date">
-        <time datetime="2019-09-26T13:18:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-26</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	      <a class="archive-article-title" href="/2019/09/26/ways-to-detect-and-mitigate-powershell-attacks/" target="_blank">检测和缓解PowerShell攻击的方法</a>
-        
+    <h1 class="article-title" itemprop="name">
+      威胁狩猎终极指南
     </h1>
   
 
 
-        <div class="article-info info-on-right">
-          
+  
+  
+        <!-- 不蒜子统计 -->
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2019/09/30/Threat-Hunting-Ultimate-Guide/" class="archive-article-date">
+        <time datetime="2019-09-30T07:32:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-30</time>
+</a>
+
+  
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p><strong>声明：本文档由12306Bro个人业余时间翻译，个人行为与公司无任何关系！译文来源<a href="https://resources.infosecinstitute.com/" target="_blank" rel="noopener">INFOSEC</a>站点相关文档。如您对翻译文档内容有异议，请将原文文档做为主要参考，原文版权由博客站及其相关成员持有并保留。翻译文章禁止用于任何商业用途，仅供交流与学习。</strong></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>从本质上讲，网络世界中的威胁狩猎可能与现实世界中的狩猎非常相似。它需要具有独特技能的专业人员，他们具有一定的耐心，批判性思维，创造力和敏锐的洞察力，通常以网络行为异常的形式发现猎物。</p>
+<p>“但是猎人到底在寻找什么呢？以及为什么我们需要它们？“ 很多CEO问。“既然我们已经实施了最新的网络安全解决方案，我们部署了最新的设备，我们的系统是否得到了充分的保护？”这是一个简单的问题：威胁搜寻的核心可以理解为一个简单的事实，即没有系统可以被视为100％受保护。即使使用最好，最新的技术，也总是存在一些高级威胁能够逃避你的防御方案和设备，而这正是我们正在寻找的东西。</p>
+<p>从以往的经验上讲，大多数公司都采用一种方法，即一旦部署了安全解决方案，它就会着重于防御大多数已知攻击。例如，在采用反恶意软件的解决方案的情况下，对于已知公开代码的恶意软件奏效。如果它是全新的代码，那么即使是基于人工智能的最新解决方案也可能很难检测到它。</p>
+<p>这就是为什么需要威胁搜寻的原因，它创建了一个新的安全范式：它假定由于不可能阻止每一次攻击，因此公司网络将受到威胁，但你可以通过猎物留下的痕迹，去追踪猎物，发现攻击行为。</p>
+<p>那么您是否有兴趣参加狩猎活动？以下是您创建有效的网络威胁搜寻程序应了解的一些基本要点：</p>
+<h2 id="什么是威胁猎人？"><a href="#什么是威胁猎人？" class="headerlink" title="什么是威胁猎人？"></a>什么是威胁猎人？</h2><p>通常很多人喜欢使用网络安全威胁分析师这个名字，但是我认为这不是很酷。通常情况下，他们是通过安全服务提供商或公司内部自己的安全运营中心（SOC）进行工作的，他们可以采用手动和软件辅助技术来检测网络内可能已存在的威胁事件，而这些威胁事件信息淹没在海量的事件之中。</p>
+<p>想要从中搜寻到威胁，这绝非易事，不仅需要网络安全方面的知识，还需要业务知识和企业运营的高技能专业人员。例如，检测网络异常行为可能是非常简单的，通过发现与该公司没有业务往来的国家/地区的流量增加来识别异常行为。但不幸的是，并非每次攻击都会使用这种方式。</p>
+<p>高级威胁可能是非常的复杂，和正常行为没有什么区别。例如，许多数据传输攻击技术都使用了加密或隐蔽通道，例如DNS隧道。在这种情况下，数据在DNS查询和响应中进行了编码，乍一看，它看起来与普通连接几乎相同。但是，优秀的猎人会迅速注意到异常，例如请求和响应的大小、每个IP地址、域内的DNS流量等。</p>
+<h2 id="威胁猎人需要哪些工具？"><a href="#威胁猎人需要哪些工具？" class="headerlink" title="威胁猎人需要哪些工具？"></a>威胁猎人需要哪些工具？</h2><p>如前所述，寻找网络威胁并非易事，即便是没有经验的猎人，没有合适的工具，也很可能失败。一些基本需求包括：</p>
+<p><strong>数据</strong>：猎人将需要访问网络上任何设备的有意义的日志：这包括服务器，网络设备（即防火墙，交换机，路由器），数据库和终端设备。听起来像很多数据，是因为有一点是非常重要，即拥有一个集中的位置来收集数据并进行分析，包括我们刚刚提到的几个不同数据点中的关键步骤，例如数据收集，关联和规范化。在这种情况下，一个好的SIEM解决方案会是猎人的最好朋友。</p>
+<p><strong>基线</strong>：如果猎人希望检测到异常，则具有网络流量行为的基线可能具有巨大的价值。从广义上讲，基线将定义预期和授权的事件，从而更容易发现异常并进行调查。</p>
+<p><strong>威胁情报</strong>：网络犯罪分子相互合作，共享信息，代码和恶意工具并不罕见。随着使用类似技术的攻击越来越多，它增加了团体或公司在沦陷之前发现它的机会。威胁情报（也通常称为网络威胁情报）是通过多种来源获取有关对环境的威胁的可行知识的过程。</p>
+<p>具有新攻击情报的猎人可能能够快速发现网络中的IOC（攻击指示）或IOA（攻击指示）并根据此信息采取行动。</p>
+<h2 id="威胁猎人应该寻找什么？"><a href="#威胁猎人应该寻找什么？" class="headerlink" title="威胁猎人应该寻找什么？"></a>威胁猎人应该寻找什么？</h2><p>这一点可以回溯到最初的CEO问题：“猎人正在寻找什么？”实际上，威胁搜寻的一个非常重要的起点就是确定优先级的情报需求（PIR）。从本质上讲，PIR是高级问题，一旦得到回答，它将为战略性网络安全响应提供要素。</p>
+<p>例如，PIR可能基于一组推测，例如：威胁来自何处？网络威胁是否隐藏在噪音，每天处理的大量日志和警报中？对潜在威胁最诱人的重要公司资产/信息是什么，他们将如何设法获得它？这种高级别的询问将使威胁搜寻者可以查找更具体的信息。是否有多个低级警报连接到单个指示器？新的威胁情报信息是否与过去30或60天内的日志相匹配？远程会话中是否存在异常，例如使用以前未见的命令？</p>
+<p>这些问题的答案构成了猎人将要走的路。这是通过收集数据并根据可用的任何信息/工具解释结果，发现异常并采取必要措施阻止活动威胁来实现的。</p>
+<h2 id="如何定义理想的狩猎成熟度水平"><a href="#如何定义理想的狩猎成熟度水平" class="headerlink" title="如何定义理想的狩猎成熟度水平"></a>如何定义理想的狩猎成熟度水平</h2><p>重要的是要了解威胁搜寻程序有多个成熟度级别。必须考虑三个基本因素：</p>
+<ul>
+<li>收集的数据质量</li>
+<li>用于收集和分析数据的工具</li>
+<li>威胁猎人的技能和经验</li>
+</ul>
+<p>在初始成熟度级别（请参见下表），组织将主要依靠自动警报，很少或没有常规的数据收集功能，而人力基本上将集中在警报解决上。在这一点上，即使在经验丰富的猎人的帮助下，组织也不会被视为具有威胁搜寻能力。</p>
+<p>达到较高的成熟度水平是需要付出一些努力，但是，正如预期的那样，结果和预期存在巨大差异。例如，一个已经达到成熟度级别的组织（在拥有活跃猎物计划的组织中最常见）将能够定期应用经过修改的程序来收集/分析数据，从而使威胁猎物成为现实。</p>
+<p><img src="https://s2.ax1x.com/2019/09/30/uY91Et.png" alt="HMM"></p>
+<p>由于每个成熟度级别之间的差距以及狩猎结果之间的差距都可能很大，因此评估和确定威胁狩猎程序的理想水平非常重要。</p>
+<h2 id="如何创建威胁搜寻过程"><a href="#如何创建威胁搜寻过程" class="headerlink" title="如何创建威胁搜寻过程"></a>如何创建威胁搜寻过程</h2><p>一旦了解了威胁搜寻程序的所有要素，就可以轻松创建一个简单但非常有效的流程。基本步骤是：</p>
+<p><img src="https://s2.ax1x.com/2019/09/30/uJz84U.png" alt="uJz84U.md.png"></p>
+<ul>
+<li><p><strong>收集和处理数据</strong>：同样，如果没有高质量的数据，就不可能寻找威胁。预先计划并定义必须收集哪些数据以及将在何处集中和处理这些数据非常重要。如前所述，SIEM解决方案是猎人的最好朋友。</p>
+</li>
+<li><p><strong>建立假设：</strong>知道您要寻找的东西非常重要，这一切都始于基于实际公司环境的面向业务的假设。最好的方法是从对公司的网络安全策略有意义的简单，高层次的问题开始。这将使猎人专注于实际情况，从而产生更有效的威胁猎取程序。</p>
+</li>
+<li><p><strong>Hunt</strong>：现在好玩了！好吧，也许不是那么有趣。有时，威胁搜寻可能只不过是处理数据并解释几个小时的结果，只是发现一个假设尚未得到证实。</p>
+<p>如前所述，猎人必须在技术专长方面表现出色，将信息安全，法医科学和情报分析等领域相结合，但也必须有足够的耐心。</p>
+</li>
+<li><p><strong>识别威胁</strong>：正如预期的那样，在某些时候，您的假设将被证明是有效的，并且将识别出威胁。现在是时候了解它如何影响公司了。这是正在进行的重大安全事件吗？这是刚刚开始的网络攻击吗？是否有可能是虚假警报？</p>
+<p>在确定最佳行动方案之前，猎人必须回答所有这些问题。</p>
+</li>
+<li><p><strong>响应</strong>：在确认威胁并知道攻击的程度之后，下一步就是创建适当的响应。当然，有必要停止当前的攻击，删除最终的恶意软件文件，并将更改/删除的文件恢复为原始状态，但并不仅限于此。为了提高安全性并防止将来发生类似的攻击，了解发生了什么也很重要。</p>
+<p>例如，可能有必要采取措施，例如更新防火墙/ IPS规则，开发新的SIEM警报，部署安全补丁和/或更改系统配置。换句话说：采取所有必要步骤，以确保不太可能发生另一次攻击事件。</p>
+</li>
+</ul>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>威胁搜寻可以为网络安全策略提供重要价值。在没有系统100％安全的简单前提下，有经验的威胁猎人可以主动检测并阻止最偷偷摸摸的攻击者。</p>
+<p>不出所料，创建有效的威胁搜寻程序将需要一些努力：在实施特定策略之前，拥有合适的专业人员和必要的工具至关重要。一个好的方法是首先定义将为公司提供实际价值的成熟度级别，确认现有资源是否足够，并创建经验丰富的专业人员，数据收集/处理工具和可行的情报的正确组合。让狩猎开始！</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>从“如何创建威胁寻找过程”来思考红蓝对抗磨砺蓝队威胁狩猎成熟度。</p>
+<p>数据收集、标准化，这在威胁狩猎过程中是非常重要的，没有高质量的数据很难帮助蓝队追踪威胁。那么我们需要采集什么样的日志，什么样的日志满足蓝队的狩猎需要？这是每一个蓝队成员都要思考的问题。</p>
+<p>建立建设，为什么需要建立假设？当一个新的业务上线，蓝队都需要去评估自己的系统，假设可能存在哪些风险，从攻击者的角度思考通过哪些方式攻击过来（未知攻焉知防），重点关注风险点。</p>
+<p>Hunt，万事俱备只欠东风么？不是，当你准备好一切，准备大干一场的时候，你会发现总会有各种各样的问题，导致你无法准确地进行狩猎。具体什么原因就不多说了，每个人的情况可能不一样。理想和现实，现实会给你一大嘴巴。</p>
+<p>识别威胁，蓝队在发现威胁之后，如何识别红队现在在做什么？下一步要做什么？这很重要，并不是所有的解决方案都是拔网线、断网！这里建议你可以去看看MITER关于<a href="https://attack.mitre.org/" target="_blank" rel="noopener">ATT&amp;CK</a>的介绍，全面系统的了解红队的常用技战术。</p>
+<p>响应，当蓝队发现红队的攻击程度之后，蓝队就可以进行适当的响应。</p>
+
+    
+
+    
+
+    
+      <div> 
+        <ul class="post-copyright">
+          <li>
+            <strong>本文作者：</strong>
+            12306Bro
+          </li>
+          <li>
+            <strong>本文链接：</strong>
+            <a href="https://www.96007.club/2019/09/30/Threat-Hunting-Ultimate-Guide/" title="威胁狩猎终极指南" target="_blank">https://www.96007.club/2019/09/30/Threat-Hunting-Ultimate-Guide/</a>
+          </li>
+          <li>
+            <strong>版权声明： </strong>
+            本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow" target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
+          </li>
+        </ul>
+      </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">威胁狩猎</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/威胁狩猎//" class="article-tag-list-link color5">威胁狩猎</a>
-        		</li>
-      		
-		</ul>
-	</div>
+    
 
+    
 
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://www.96007.club/2019/09/30/Threat-Hunting-Ultimate-Guide/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/09/19/five-challenges-with-monitoring-active-directory-security-using-event-logs/" class="archive-article-date">
-        <time datetime="2019-09-19T04:54:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-19</time>
-</a>
 
-        </div>
-    	 
+
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-	
-	      <a class="archive-article-title" href="/2019/09/19/five-challenges-with-monitoring-active-directory-security-using-event-logs/" target="_blank">使用windows事件日志监控AD安全性的五大挑战</a>
+  
+    <a href="/2019/09/26/ways-to-detect-and-mitigate-powershell-attacks/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">检测和缓解PowerShell攻击的方法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
         
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/威胁狩猎//" class="article-tag-list-link color5">威胁狩猎</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/09/17/Credential-Access-win-Password-spraying/" class="archive-article-date">
-        <time datetime="2019-09-17T00:59:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-17</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	      <a class="archive-article-title" href="/2019/09/17/Credential-Access-win-Password-spraying/" target="_blank">检测windows下RDP/LDAP密码喷射技术</a>
         
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">密码喷射</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/威胁狩猎//" class="article-tag-list-link color5">威胁狩猎</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/09/12/Credential-Access-Win-PlaintextCredentials-Procdump/" class="archive-article-date">
-        <time datetime="2019-09-12T04:53:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-12</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	      <a class="archive-article-title" href="/2019/09/12/Credential-Access-Win-PlaintextCredentials-Procdump/" target="_blank">利用Procdump进行windows明文凭证获取</a>
         
-    </h1>
-  
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">凭证获取</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/威胁狩猎//" class="article-tag-list-link color5">威胁狩猎</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/09/11/Credential-Access-win-SAM-Reg/" class="archive-article-date">
-        <time datetime="2019-09-11T02:18:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-11</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	      <a class="archive-article-title" href="/2019/09/11/Credential-Access-win-SAM-Reg/" target="_blank">利用SAM数据库获取本地用户hash</a>
-        
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">凭证获取</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/威胁狩猎//" class="article-tag-list-link color5">威胁狩猎</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/09/02/Bypass-sysmon/" class="archive-article-date">
-        <time datetime="2019-09-02T13:54:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	      <a class="archive-article-title" href="/2019/09/02/Bypass-sysmon/" target="_blank">windows常见绕过sysmon的方法</a>
-        
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">逃避追踪</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/威胁狩猎//" class="article-tag-list-link color5">威胁狩猎</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/09/02/Credential-Access-win-LSA-mimikatz/" class="archive-article-date">
-        <time datetime="2019-09-02T01:17:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	      <a class="archive-article-title" href="/2019/09/02/Credential-Access-win-LSA-mimikatz/" target="_blank">利用LSA获取用户账号密码</a>
-        
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">凭证获取</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/威胁狩猎//" class="article-tag-list-link color5">威胁狩猎</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/08/28/linux-Setuid-and-Setgid/" class="archive-article-date">
-        <time datetime="2019-08-28T14:42:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-28</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	      <a class="archive-article-title" href="/2019/08/28/linux-Setuid-and-Setgid/" target="_blank">ATT&amp;CK解读——T1166</a>
-        
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/威胁狩猎//" class="article-tag-list-link color5">威胁狩猎</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -679,10 +440,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
