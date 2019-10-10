@@ -6,21 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://www.96007.club">
-  <title>利用Procdump进行windows明文凭证获取 | 12306Bro.blog</title>
+  <title>缓存和存储凭据技术概述 | 12306Bro.blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="来自ATT&amp;amp;CK的描述凭证获取是从操作系统和软件中获取登录信息和密码的过程，通常为HASH散列或明文密码。然后使用凭证进行横向移动访问其他系统。 用户登录系统后，会生成各种凭据并将其存储在内存中的本地安全机构子系统服务（LSASS）进程中。这些凭证可以由管理用户或SYSTEM进行管理。 SSPI是Security Support Provider Interface（Microsoft安全">
-<meta name="keywords" content="终端日志分析,凭证获取">
+  <meta name="description" content="一、概述当用户或服务想要访问计算机资源时，他们必须提供证明其身份的信息。他们的身份通常采用其账户用户名的形式。这可能是用户名，即安全帐户管理器（SAM）帐户名或用户主体名称（UPN）。但是，为了证明自己的身份，他们必须提供秘密信息，称为身份验证者。身份验证器可以采用多种形式，具体取决于身份验证协议和方法。身份和身份验证者的组合称为身份验证凭证。 创建，提交和验证凭据的过程简称为身份验证，它是通过各">
+<meta name="keywords" content="凭证获取">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用Procdump进行windows明文凭证获取">
-<meta property="og:url" content="https://www.96007.club/2019/09/12/Credential-Access-Win-PlaintextCredentials-Procdump/index.html">
+<meta property="og:title" content="缓存和存储凭据技术概述">
+<meta property="og:url" content="https://www.96007.club/2019/10/10/Overview-of-caching-and-storing-credentials-technology/index.html">
 <meta property="og:site_name" content="12306Bro.blog">
-<meta property="og:description" content="来自ATT&amp;amp;CK的描述凭证获取是从操作系统和软件中获取登录信息和密码的过程，通常为HASH散列或明文密码。然后使用凭证进行横向移动访问其他系统。 用户登录系统后，会生成各种凭据并将其存储在内存中的本地安全机构子系统服务（LSASS）进程中。这些凭证可以由管理用户或SYSTEM进行管理。 SSPI是Security Support Provider Interface（Microsoft安全">
+<meta property="og:description" content="一、概述当用户或服务想要访问计算机资源时，他们必须提供证明其身份的信息。他们的身份通常采用其账户用户名的形式。这可能是用户名，即安全帐户管理器（SAM）帐户名或用户主体名称（UPN）。但是，为了证明自己的身份，他们必须提供秘密信息，称为身份验证者。身份验证器可以采用多种形式，具体取决于身份验证协议和方法。身份和身份验证者的组合称为身份验证凭证。 创建，提交和验证凭据的过程简称为身份验证，它是通过各">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-12T05:12:16.754Z">
+<meta property="og:updated_time" content="2019-10-10T08:35:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用Procdump进行windows明文凭证获取">
-<meta name="twitter:description" content="来自ATT&amp;amp;CK的描述凭证获取是从操作系统和软件中获取登录信息和密码的过程，通常为HASH散列或明文密码。然后使用凭证进行横向移动访问其他系统。 用户登录系统后，会生成各种凭据并将其存储在内存中的本地安全机构子系统服务（LSASS）进程中。这些凭证可以由管理用户或SYSTEM进行管理。 SSPI是Security Support Provider Interface（Microsoft安全">
+<meta name="twitter:title" content="缓存和存储凭据技术概述">
+<meta name="twitter:description" content="一、概述当用户或服务想要访问计算机资源时，他们必须提供证明其身份的信息。他们的身份通常采用其账户用户名的形式。这可能是用户名，即安全帐户管理器（SAM）帐户名或用户主体名称（UPN）。但是，为了证明自己的身份，他们必须提供秘密信息，称为身份验证者。身份验证器可以采用多种形式，具体取决于身份验证协议和方法。身份和身份验证者的组合称为身份验证凭证。 创建，提交和验证凭据的过程简称为身份验证，它是通过各">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -178,14 +178,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Credential-Access-Win-PlaintextCredentials-Procdump" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Overview-of-caching-and-storing-credentials-technology" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class=" article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      利用Procdump进行windows明文凭证获取
+      缓存和存储凭据技术概述
     </h1>
   
 
@@ -197,8 +197,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2019/09/12/Credential-Access-Win-PlaintextCredentials-Procdump/" class="archive-article-date">
-        <time datetime="2019-09-12T04:53:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-12</time>
+<a href="/2019/10/10/Overview-of-caching-and-storing-credentials-technology/" class="archive-article-date">
+        <time datetime="2019-10-10T10:47:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-10</time>
 </a>
 
   
@@ -207,45 +207,71 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h2 id="来自ATT-amp-CK的描述"><a href="#来自ATT-amp-CK的描述" class="headerlink" title="来自ATT&amp;CK的描述"></a>来自ATT&amp;CK的描述</h2><p>凭证获取是从操作系统和软件中获取登录信息和密码的过程，通常为HASH散列或明文密码。然后使用凭证进行横向移动访问其他系统。</p>
-<p>用户登录系统后，会生成各种凭据并将其存储在内存中的本地安全机构子系统服务（LSASS）进程中。这些凭证可以由管理用户或SYSTEM进行管理。</p>
-<p>SSPI是Security Support Provider Interface（Microsoft安全支持提供器接口）的英文缩写。安全支持提供程序接口（SSPI）允许应用程序使用计算机或网络上可用的各种安全模型，而无需更改安全系统的接口。SSPI不会记录登录凭据，因为这通常是操作系统处理的特权操作。</p>
-<p>一个安全支持提供商（SSP）包含在一个动态链接库，通过使一个或多个实现SSPI（DLL）安全包提供给应用程序。每个安全包都提供应用程序的SSPI函数调用和实际安全模型的功能之间的映射。</p>
-<p>以下SSP可用于获取凭证：</p>
-<p>Msv：交互式登录，批量登录和服务登录通过MSV身份验证包完成；</p>
-<p>Wdigest：摘要认证协议设计用于超文本传输协议（HTTP）和简单认证安全层（SASL）交换；</p>
-<p>Kerberos：Kerberos V5身份验证协议提供一个在客户端跟服务器端之间或者服务器与服务器之间的身份验证机制 （并且是相互的身份验证机制）；</p>
-<p>CredSSP：为远程桌面服务提供SSO和网络级别身份验证；</p>
-<h2 id="测试案例"><a href="#测试案例" class="headerlink" title="测试案例"></a>测试案例</h2><p>以下工具可用于枚举凭据：</p>
+    <h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>当用户或服务想要访问计算机资源时，他们必须提供证明其身份的信息。他们的身份通常采用其账户用户名的形式。这可能是用户名，即安全帐户管理器（SAM）帐户名或用户主体名称（UPN）。但是，为了证明自己的身份，他们必须提供秘密信息，称为身份验证者。身份验证器可以采用多种形式，具体取决于身份验证协议和方法。身份和身份验证者的组合称为身份验证凭证。</p>
+<p>创建，提交和验证凭据的过程简称为身份验证，它是通过各种身份验证协议（例如Kerberos协议）实现的。身份验证建立用户的身份，但不一定建立用户的访问或更改特定计算资源的权限。该过程称为授权。</p>
+<p>通常将凭据创建或转换为计算机上可用的身份验证协议所需的形式。凭据可以存储在本地安全授权子系统服务（LSASS）进程内存中，以供帐户在会话期间使用。凭据还可以存储在权威数据库（例如SAM数据库）和Active Directory域服务（AD DS）使用的数据库中的硬盘驱动器上。</p>
+<h1 id="二、常见凭证认证方式"><a href="#二、常见凭证认证方式" class="headerlink" title="二、常见凭证认证方式"></a>二、常见凭证认证方式</h1><h3 id="2-1-纯文本凭证"><a href="#2-1-纯文本凭证" class="headerlink" title="2.1.纯文本凭证"></a>2.1.纯文本凭证</h3><p>当用户登录到运行Windows的计算机并提供用户名和凭据（例如密码或PIN）时，信息将以纯文本格式提供给计算机。该明文密码用于将用户身份转换为身份验证协议所需的形式，从而对用户身份进行身份验证。Windows的某些版本还保留此密码的加密副本，可以将其解密为纯文本，以与摘要式身份验证等身份验证方法一起使用。</p>
+<p><strong>注意：</strong></p>
+<p>Windows操作系统永远不会在内存或硬盘驱动器上存储任何纯文本凭据。仅可逆加密的凭据存储在此处。当以后需要访问凭据的纯文本格式时，Windows将以加密形式存储密码，这些密码只能由操作系统解密以在授权情况下提供访问权限。</p>
+<p>但是，这些保护措施不能阻止具有系统级访问权限的恶意用户以与操作系统合法使用相同的方式非法提取它们。</p>
+<h3 id="2-2-NT哈希"><a href="#2-2-NT哈希" class="headerlink" title="2.2.NT哈希"></a>2.2.NT哈希</h3><p>密码的NT哈希是通过使用无盐的MD4哈希算法来计算的。MD4是一种加密的单向函数，可产生密码的数学表示。此哈希函数旨在始终从相同的密码输入中产生相同的结果，并最大程度地减少两个不同的密码可以产生相同结果的冲突。该哈希值的长度始终相同，并且不能直接解密以显示明文密码。由于NT哈希仅在密码更改时才更改，因此NT哈希在验证用户密码之前一直有效。</p>
+<p><strong>注意：</strong></p>
+<p>为了防止在NT哈希或在线系统上遭受暴力攻击，使用密码进行身份验证的用户应设置强密码或口令短语，其中包括多组字符，并且只要用户可以轻松记住即可。</p>
+<h3 id="2-3-LM哈希"><a href="#2-3-LM哈希" class="headerlink" title="2.3.LM哈希"></a>2.3.LM哈希</h3><p>LAN Manager（LM）哈希是从用户密码派生的。NTLM协议中保留了对LM哈希和LAN Manager身份验证协议的传统支持。Windows和Microsoft安全指南中的默认配置不鼓励其使用。</p>
+<p>LM哈希本质上更容易受到攻击，因为：</p>
 <ul>
-<li>Windows凭据编辑器</li>
-<li>Mimikatz</li>
+<li>LM散列要求密码长度少于15个字符，并且仅包含ASCII字符。</li>
+<li>LM哈希不能区分大写字母和小写字母。</li>
 </ul>
-<p>除了内存技术，LSASS进程内存可以从目标主机转储并在本地系统上进行分析。</p>
-<p>例如，在目标主机上使用procdump：</p>
+<h3 id="2-4-Windows登录缓存的密码验证程序"><a href="#2-4-Windows登录缓存的密码验证程序" class="headerlink" title="2.4.Windows登录缓存的密码验证程序"></a>2.4.Windows登录缓存的密码验证程序</h3><p>这些验证者不是凭据，因为它们无法提供给另一台计算机进行身份验证，并且只能用于本地验证凭据。它们存储在本地计算机上的注册表中，并在用户登录期间加入域的计算机无法连接到AD DS时提供凭据验证。</p>
+<h1 id="三、凭证存储"><a href="#三、凭证存储" class="headerlink" title="三、凭证存储"></a>三、凭证存储</h1><p>以下各节描述Windows操作系统中凭据存储的位置。Windows凭据由帐户名和身份验证器的组合组成。根据用户会话的状态（可能是活动的或非活动的以及本地的或联网的）从以下位置进行存储和检索。</p>
+<h2 id="3-1-安全帐户管理器数据库-SAM"><a href="#3-1-安全帐户管理器数据库-SAM" class="headerlink" title="3.1.安全帐户管理器数据库(SAM)"></a>3.1.安全帐户管理器数据库(SAM)</h2><p>SAM数据库作为文件存储在本地硬盘驱动器上，并且是每台Windows计算机上本地帐户的权威证书存储。该数据库包含该特定计算机本地的所有凭据，包括内置的本地管理员帐户和该计算机的任何其他本地帐户。</p>
+<p>SAM数据库存储有关每个帐户的信息，包括用户名和NT密码哈希。默认情况下，SAM数据库不在当前Windows版本上存储LM哈希。没有密码存储在SAM数据库中，只有密码哈希。NT密码哈希是帐户密码的未加盐的MD4哈希。这意味着，如果两个帐户使用相同的密码，则它们还将具有相同的NT密码哈希。</p>
+<h2 id="3-2-本地安全机构子系统服务（LSASS）"><a href="#3-2-本地安全机构子系统服务（LSASS）" class="headerlink" title="3.2.本地安全机构子系统服务（LSASS）"></a>3.2.本地安全机构子系统服务（LSASS）</h2><p>本地安全机构子系统服务（LSASS）代表具有活动Windows会话的用户将凭据存储在内存中。这使用户可以无缝访问网络资源，例如文件共享，Exchange Server邮箱和SharePoint网站，而无需为每个远程服务重新输入凭据。</p>
+<p>LSASS可以多种形式存储凭据，包括：</p>
 <ul>
-<li>procdump -ma lsass.exe lsass_dump</li>
+<li>可逆加密的纯文本</li>
+<li>Kerberos票证（TGT，服务票证）</li>
+<li>NT哈希</li>
+<li>LM哈希</li>
 </ul>
-<p>在本地，运行mimikatz：</p>
+<p>如果用户使用智能卡登录Windows，则LSASS不会存储明文密码，但会存储该帐户的相应NT哈希值和智能卡的明文PIN。如果为交互式登录所需的智能卡启用了帐户属性，则会自动为该帐户生成一个随机的NT哈希值，而不是原始的密码哈希。设置属性时自动生成的密码哈希不会更改。</p>
+<p>从Windows Server 2008 R2和Windows 7开始，即使禁用了需要纯文本凭据的凭据提供程序，也无法禁用它们在内存中的存储。</p>
+<p>存储的凭据直接与自上次重启以来已启动但尚未关闭的LSASS登录会话相关联。例如，当用户执行以下任一操作时，将创建具有存储的LSA凭据的LSA会话：</p>
 <ul>
-<li>sekurlsa::Minidump lsassdump.dmp</li>
-<li>sekurlsa::logonPasswords</li>
+<li>登录到计算机上的本地会话或RDP会话</li>
+<li>使用RunAs选项运行任务</li>
+<li>在计算机上运行活动的Windows服务</li>
+<li>运行计划的任务或批处理任务</li>
+<li>使用远程管理工具在本地计算机上运行任务</li>
 </ul>
-<h2 id="检测日志"><a href="#检测日志" class="headerlink" title="检测日志"></a>检测日志</h2><p>sysmon日志</p>
-<h2 id="测试复现"><a href="#测试复现" class="headerlink" title="测试复现"></a>测试复现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Microsoft Windows [版本 6.1.7601]</span><br><span class="line">版权所有 (c) 2009 Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator&gt;cd C:\Users\Administrator\Desktop\Procdump</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\Procdump&gt;procdump64.exe -ma lsass.exe 1.dmp</span><br><span class="line"></span><br><span class="line">ProcDump v8.0 - Writes process dump files</span><br><span class="line">Copyright (C) 2009-2016 Mark Russinovich</span><br><span class="line">Sysinternals - www.sysinternals.com</span><br><span class="line">With contributions from Andrew Richards</span><br><span class="line"></span><br><span class="line">[13:42:47] Dump 1 initiated: C:\Users\Administrator\Desktop\Procdump\1.dmp</span><br><span class="line">[13:42:50] Dump 1 writing: Estimated dump file size is 50 MB.</span><br><span class="line">[13:42:51] Dump 1 complete: 50 MB written in 3.3 seconds</span><br><span class="line">[13:42:51] Dump count reached.</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\Procdump&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="测试留痕"><a href="#测试留痕" class="headerlink" title="测试留痕"></a>测试留痕</h2><p>sysmon事件，进程创建、进程访问、进程结束</p>
-<h2 id="检测规则-思路"><a href="#检测规则-思路" class="headerlink" title="检测规则/思路"></a>检测规则/思路</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">title: 明文获取凭证——Procdum</span><br><span class="line">description: windows server 2008 模拟测试结果</span><br><span class="line">status: experimental</span><br><span class="line">author: 12306Bro</span><br><span class="line">logsource:</span><br><span class="line">    product: windows</span><br><span class="line">    service: sysmon</span><br><span class="line">detection:</span><br><span class="line">    selection1:</span><br><span class="line">        EventID: 1</span><br><span class="line">        Image: &apos;*\procdump*.exe&apos;</span><br><span class="line">        Product: ProcDump</span><br><span class="line">        OriginalFileName: procdump</span><br><span class="line">        CommandLine: &apos;procdump*.exe  -ma lsass.exe *.dmp&apos;</span><br><span class="line">    selection2:</span><br><span class="line">        EventID: 10</span><br><span class="line">        SourceImage: &apos;*\procdump*.exe&apos;</span><br><span class="line">        TargetImage: &apos;C:\Windows\system32\lsass.exe&apos;</span><br><span class="line">    timeframe: last 1m</span><br><span class="line">    condition: selection1 and selection2</span><br><span class="line">level: medium</span><br></pre></td></tr></table></figure>
-
-<p>建议您关注一下sysmon10.2的新特性OriginalFileName，经过安全人员研究测试发现，在进程创建事件中，procdump修改为ABC，但OriginalFileName依旧能够清晰的识别出该款工具是procdump。</p>
-<h2 id="参考推荐"><a href="#参考推荐" class="headerlink" title="参考推荐"></a>参考推荐</h2><p>MITRE-ATT&amp;CK-T1003：<a href="https://attack.mitre.org/techniques/T1003/" target="_blank" rel="noopener">https://attack.mitre.org/techniques/T1003/</a></p>
-<p>windows SSPI模型：<a href="https://docs.microsoft.com/zh-cn/windows/win32/secauthn/sspi-model" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/windows/win32/secauthn/sspi-model</a></p>
-<p>MSV身份验证包：<a href="https://blog.csdn.net/lionzl/article/details/7725116" target="_blank" rel="noopener">https://blog.csdn.net/lionzl/article/details/7725116</a></p>
-<p>Wdigest摘要认证协议：<a href="https://www.4hou.com/info/news/8126.html" target="_blank" rel="noopener">https://www.4hou.com/info/news/8126.html</a></p>
-<p>Kerberos身份认证协议技术参考：<a href="https://www.cnblogs.com/adylee/articles/893448.html" target="_blank" rel="noopener">https://www.cnblogs.com/adylee/articles/893448.html</a></p>
-<p>CredSSP凭证安全支持提供程序协议：<a href="https://docs.microsoft.com/zh-cn/windows/win32/secauthn/credential-security-support-provider" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/windows/win32/secauthn/credential-security-support-provider</a></p>
-<h3 id="其他凭证获取及检测文章"><a href="#其他凭证获取及检测文章" class="headerlink" title="其他凭证获取及检测文章"></a>其他凭证获取及检测文章</h3><p>利用SAM数据库获取本地用户hash ：<a href="https://www.96007.club/2019/09/11/Credential-Access-win-SAM-Reg/">https://www.96007.club/2019/09/11/Credential-Access-win-SAM-Reg/</a></p>
-<p>利用LSA获取用户账号密码：<a href="https://www.96007.club/2019/09/02/Credential-Access-win-LSA-mimikatz/">https://www.96007.club/2019/09/02/Credential-Access-win-LSA-mimikatz/</a></p>
+<h2 id="3-3-硬盘驱动器上的LSA密码"><a href="#3-3-硬盘驱动器上的LSA密码" class="headerlink" title="3.3.硬盘驱动器上的LSA密码"></a>3.3.硬盘驱动器上的LSA密码</h2><p>本地安全机构（LSA）是重要数据，仅SYSTEM帐户进程可以访问。这些密码中的某些是在重新启动后必须保留的凭据，它们以加密形式存储在硬盘驱动器上。存储为LSA密码的凭据可能包括：</p>
+<ul>
+<li>计算机的AD DS帐户的帐户密码</li>
+<li>在计算机上配置的Windows服务的帐户密码</li>
+<li>配置的计划任务的帐户密码</li>
+<li>IIS应用程序池和网站的帐户密码</li>
+</ul>
+<h2 id="3-4-AD-DS数据库（NTDS-DIT）"><a href="#3-4-AD-DS数据库（NTDS-DIT）" class="headerlink" title="3.4.AD DS数据库（NTDS.DIT）"></a>3.4.AD DS数据库（NTDS.DIT）</h2><p>Active Directory域服务（AD DS）数据库是AD DS域中所有用户帐户和计算机帐户的凭据的权威存储。AD DS中两种不同的凭据管理类型是：</p>
+<p>每个可写域控制器都包含域的AD DS数据库的完整副本，包括域中所有帐户的帐户凭据。</p>
+<p>只读域控制器（RODC）包含部分本地副本，其中包含域中帐户的选定子集的凭据。默认情况下，RODC没有特权域帐户的副本。</p>
+<p>数据库为每个帐户存储许多属性，包括用户名类型和以下属性：</p>
+<ul>
+<li>当前密码的NT哈希</li>
+<li>NT哈希用于密码历史记录（如果已配置）</li>
+</ul>
+<p>NT哈希值也保留在AD DS中，用于以前的密码，以在密码更改操作期间强制执行密码历史记录。保留的密码历史记录NT哈希值的数量等于密码历史记录实施策略中配置的密码数量。</p>
+<p>LM哈希也可能存储在AD DS数据库中，具体取决于域控制器操作系统版本，配置设置和密码更改频率。</p>
+<h2 id="3-5-凭证管理器"><a href="#3-5-凭证管理器" class="headerlink" title="3.5.凭证管理器"></a>3.5.凭证管理器</h2><p>用户可以选择使用应用程序或“凭据管理器控制面板”小程序在Windows中保存密码。这些凭据存储在硬盘驱动器上，并使用数据保护应用程序编程接口（DPAPI）进行保护。以该用户身份运行的任何程序都将能够访问此存储中的凭据。</p>
+<p>凭据管理器可以通过两种方式获取其信息：</p>
+<p><strong>显式创建</strong>    当用户输入目标计算机或域的用户名和密码时，该信息将在用户尝试登录到适当的计算机时被存储和使用。如果没有可用的存储信息，并且用户提供了用户名和密码，则可以保存该信息。如果用户决定保存信息，则凭据管理器将接收并存储该信息。</p>
+<p><strong>系统填充</strong>    操作系统尝试连接到网络上的新计算机时，它将为计算机提供当前的用户名和密码。如果这不足以提供访问权限，则Credential Manager尝试提供必要的用户名和密码。检查所有存储的用户名和密码（从最具体到最不具体），视资源而定，并按照这些用户名和密码的顺序尝试连接。由于用户名和密码是按从高到低的顺序读取和应用的，因此每个单独的目标或域最多只能存储一个用户名和密码。</p>
+<p>Credential Manager使用Credential Locker（以前称为Windows Vault）来安全存储用户名和密码。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>最近正在写关于凭证转储的一些文档报告，无意中找到了微软官方关于缓存和凭证存储概述的文章，感觉还不错，顺便做个机翻并记录到博客站。<strong>如果有问题，请以原文表达意思为准。</strong></p>
+<p>简单说一下想法吧，其中<strong>安全帐户管理器数据库(SAM)、本地安全机构子系统服务（LSASS）、硬盘驱动器上的LSA密码 、AD DS数据库（NTDS.DIT）</strong>这四部分在MITER ATT&amp;CK中被放到了<a href="https://attack.mitre.org/techniques/T1003/" target="_blank" rel="noopener">T1003</a>（凭证转储）中，凭证管理器被放到了<a href="https://attack.mitre.org/techniques/T1083/" target="_blank" rel="noopener">T1083</a>（文件和目录发现）中。所以刚开始看的时候有点懵，毕竟T1003没有提到凭证管理器，怀疑自己的报告提纲有问题。</p>
+<p>其次在记录一下今天遇到的问题吧。如何理解有盐与无盐加密？</p>
+<p><strong>盐（Salt）</strong></p>
+<p>在密码学中，是指通过在密码任意固定位置插入特定的字符串，让散列后的结果和使用原始密码的散列结果不相符，这种过程称之为“加盐”。大概懂什么意思了吧（手动滑稽）。关于具体有盐加密你可以参考这篇文章<a href="https://libuchao.com/2013/07/05/password-salt。" target="_blank" rel="noopener">https://libuchao.com/2013/07/05/password-salt。</a></p>
 
     
 
@@ -260,7 +286,7 @@
           </li>
           <li>
             <strong>本文链接：</strong>
-            <a href="https://www.96007.club/2019/09/12/Credential-Access-Win-PlaintextCredentials-Procdump/" title="利用Procdump进行windows明文凭证获取" target="_blank">https://www.96007.club/2019/09/12/Credential-Access-Win-PlaintextCredentials-Procdump/</a>
+            <a href="https://www.96007.club/2019/10/10/Overview-of-caching-and-storing-credentials-technology/" title="缓存和存储凭据技术概述" target="_blank">https://www.96007.club/2019/10/10/Overview-of-caching-and-storing-credentials-technology/</a>
           </li>
           <li>
             <strong>版权声明： </strong>
@@ -279,10 +305,6 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">凭证获取</a>
         		</li>
       		
@@ -290,17 +312,6 @@
 	</div>
 
     
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/威胁狩猎//" class="article-tag-list-link color5">威胁狩猎</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
     
 
@@ -350,7 +361,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://www.96007.club/2019/09/12/Credential-Access-Win-PlaintextCredentials-Procdump/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://www.96007.club/2019/10/10/Overview-of-caching-and-storing-credentials-technology/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -365,18 +376,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/09/17/Credential-Access-win-Password-spraying/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          检测windows下RDP/LDAP密码喷射技术
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/09/11/Credential-Access-win-SAM-Reg/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">利用SAM数据库获取本地用户hash</div>
+    <a href="/2019/09/30/Threat-Hunting-Ultimate-Guide/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">威胁狩猎终极指南</div>
       <i class="icon-circle-right"></i>
     </a>
   
